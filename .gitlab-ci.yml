@@ -1,0 +1,18 @@
+image: python:3.12.0b2-slim-buster
+
+stages:
+  - report
+
+report:
+  stage: report
+  script:
+    - apt-get update
+    - apt-get install -y sshpass
+    - apt-get install -y git
+    - python3 test.py
+    - git config user.email "volker.andreas.austrup@cern.ch"
+    - git config user.name "ExoticsDiskspaceUtilities"
+    - git remote add gitlab_origin https://oauth2:$ACCESS_TOKEN@gitlab.cern.ch/vaustrup/exoticsdiskspaceutilities.git
+    - git add reports/*.csv
+    - git commit -m "update subgroup data"
+    - git push -o ci.skip gitlab_origin HEAD:main
