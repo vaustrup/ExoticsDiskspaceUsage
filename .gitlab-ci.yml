@@ -1,15 +1,67 @@
 image: python:3.12.0b2-slim-buster
 
+before_script:
+  - apt-get update
+  - apt-get install -y sshpass
+  - apt-get install -y git
+
 stages:
   - report
+  - git
 
-report:
+cdm:
   stage: report
   script:
-    - apt-get update
-    - apt-get install -y sshpass
-    - apt-get install -y git
-    - python3 test.py
+    - python3 eos.py -s cdm
+  artifacts:
+    paths:
+      - ./reports/cdm.csv
+    expire_in: 24h
+    when: always
+
+hqt:
+  stage: report
+  script:
+    - python3 eos.py -s hqt
+  artifacts:
+    paths:
+      - ./reports/hqt.csv
+    expire_in: 24h
+    when: always
+
+jdm:
+  stage: report
+  script:
+    - python3 eos.py -s jdm
+  artifacts:
+    paths:
+      - ./reports/jdm.csv
+    expire_in: 24h
+    when: always
+
+lpx:
+  stage: report
+  script:
+    - python3 eos.py -s lpx
+  artifacts:
+    paths:
+      - ./reports/lpx.csv
+    expire_in: 24h
+    when: always
+
+ueh:
+  stage: report
+  script:
+    - python3 eos.py -s ueh
+  artifacts:
+    paths:
+      - ./reports/ueh.csv
+    expire_in: 24h
+    when: always
+
+git:
+  stage: git
+  script:
     - git config user.email "volker.andreas.austrup@cern.ch"
     - git config user.name "ExoticsDiskspaceWatcher"
     - git remote add gitlab_origin https://oauth2:$ACCESS_TOKEN@gitlab.cern.ch/vaustrup/exoticsdiskspaceusage.git

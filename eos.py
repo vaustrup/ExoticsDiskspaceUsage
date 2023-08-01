@@ -1,3 +1,4 @@
+import argparse
 import csv
 import os
 import subprocess
@@ -32,7 +33,15 @@ def check_subgroup(subgroup):
         for i in range(0, len(analysis_names)):
             writer.writerow([analysis_names[i], sizes[i], numbers[i]])
 
-
 subgroups = ["cdm", "hqt", "jdm", "lpx", "ueh"]
-for subgroup in subgroups:
+parser = argparse.ArgumentParser()
+parser.add_argument("-s", "--subgroups", default=subgroups, help="Specify subgroups to check")
+args = parser.parse_args()
+
+for s in args.subgroups:
+    if s not in subgroups:
+        log.warning(f"Subgroup {s} was not found in list of subgroups.")
+        args.subgroups.remove(s)
+
+for subgroup in args.subgroups:
     check_subgroup(subgroup)
