@@ -4,8 +4,8 @@ MultiBJet,183G,136
 SC_NCBH_NMDS,1.8T,94016
 dibjet,709G,2791
 dijet,8.2T,74002
-dijetISR,1.4T,1928
-lepdijet,2.5T,36792
+dijetISR,1.4T,2621
+lepdijet,2.5T,36799
 monoHiggs,214G,10019
 monoSWW,572G,51492
 monoSbb,4.0K,0
@@ -13,6 +13,6 @@ monoV,4.0K,0
 monojet,5.1T,233253
 photonPlusJet,4.0K,0
 qgdijet,4.1T,30953
-svjets-schannel,1.7T,5570
+svjets-schannel,1.8T,5823
 svjets,1.9T,33709
 vbfinv,32G,4656
