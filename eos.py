@@ -35,7 +35,7 @@ def check_subgroup(subgroup):
 
 subgroups = ["cdm", "hqt", "jdm", "lpx", "ueh"]
 parser = argparse.ArgumentParser()
-parser.add_argument("-s", "--subgroups", default=subgroups, help="Specify subgroups to check")
+parser.add_argument("-s", "--subgroups", nargs="+", default=subgroups, help="Specify subgroups to check")
 args = parser.parse_args()
 
 for s in args.subgroups:
