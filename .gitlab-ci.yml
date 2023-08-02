@@ -9,6 +9,15 @@ stages:
   - report
   - git
 
+cernprod:
+  stage: report
+  script:
+    - python3 gridspace.py --rse CERN-PROD_PHYS-EXOTICS
+  artifacts:
+    paths:
+      - ./reports/CERN-PROD_PHYS-EXOTICS.csv
+    expire_in: 24h
+
 cdm:
   stage: report
   script:
@@ -17,7 +26,6 @@ cdm:
     paths:
       - ./reports/cdm.csv
     expire_in: 24h
-    when: always
 
 hqt:
   stage: report
@@ -27,7 +35,6 @@ hqt:
     paths:
       - ./reports/hqt.csv
     expire_in: 24h
-    when: always
 
 jdm:
   stage: report
@@ -37,7 +44,6 @@ jdm:
     paths:
       - ./reports/jdm.csv
     expire_in: 24h
-    when: always
 
 lpx:
   stage: report
@@ -47,7 +53,6 @@ lpx:
     paths:
       - ./reports/lpx.csv
     expire_in: 24h
-    when: always
 
 ueh:
   stage: report
@@ -57,7 +62,6 @@ ueh:
     paths:
       - ./reports/ueh.csv
     expire_in: 24h
-    when: always
 
 git:
   stage: git
