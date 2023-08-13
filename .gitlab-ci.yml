@@ -18,49 +18,16 @@ cernprod:
       - ./reports/CERN-PROD_PHYS-EXOTICS.csv
     expire_in: 24h
 
-cdm:
+eos:
   stage: report
   script:
-    - python3 eos.py -s cdm
+    - python3 eos.py -s $SUBGROUP
+  parallel:
+    matrix:
+      - SUBGROUP: [cdm, hqt, jdm, lpx, ueh]
   artifacts:
     paths:
-      - ./reports/cdm.csv
-    expire_in: 24h
-
-hqt:
-  stage: report
-  script:
-    - python3 eos.py -s hqt
-  artifacts:
-    paths:
-      - ./reports/hqt.csv
-    expire_in: 24h
-
-jdm:
-  stage: report
-  script:
-    - python3 eos.py -s jdm
-  artifacts:
-    paths:
-      - ./reports/jdm.csv
-    expire_in: 24h
-
-lpx:
-  stage: report
-  script:
-    - python3 eos.py -s lpx
-  artifacts:
-    paths:
-      - ./reports/lpx.csv
-    expire_in: 24h
-
-ueh:
-  stage: report
-  script:
-    - python3 eos.py -s ueh
-  artifacts:
-    paths:
-      - ./reports/ueh.csv
+      - ./reports/$SUBGROUP.csv
     expire_in: 24h
 
 git:
