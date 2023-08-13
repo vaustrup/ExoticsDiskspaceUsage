@@ -13,7 +13,7 @@ DIRECTORY = "/eos/atlas/atlascerngroupdisk/phys-exotics/"
 def check_subgroup(subgroup):
     log.info(f"Checking subgroup {subgroup}.")
     COMMAND = f"for dir in {DIRECTORY}/{subgroup}/*/; do find \$dir -type f | wc -l; du -sh \$dir; done"
-    ssh_command = f'sshpass -p {PASSWORD} ssh -o StrictHostKeyChecking=no vaustrup@lxplus.cern.ch "{COMMAND}"'
+    ssh_command = f'sshpass -p {PASSWORD} ssh -o StrictHostKeyChecking=no exowatch@lxplus.cern.ch "{COMMAND}"'
     result = subprocess.run(ssh_command, shell=True, capture_output=True, text=True)
     content = [item for item in result.stdout.split("\n") if item!=""]
 
