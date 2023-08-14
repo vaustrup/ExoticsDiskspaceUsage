@@ -1,9 +1,9 @@
-image: python:3.12.0b2-slim-buster
+image: atlas/rucio-clients
 
 before_script:
-  - apt-get update
-  - apt-get install -y sshpass
-  - apt-get install -y git
+  - yum update
+  - yum install -y sshpass
+  - yum install -y git
 
 stages:
   - report
