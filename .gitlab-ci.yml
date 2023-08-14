@@ -1,16 +1,10 @@
-image: atlas/rucio-clients
-
-before_script:
-  - yum update
-  - yum install -y sshpass
-  - yum install -y git
-
 stages:
   - report
   - git
 
 grid:
   stage: report
+  image: atlas/rucio-clients
   script:
     - python3 gridspace.py --rse $DISK
   parallel:
@@ -23,6 +17,11 @@ grid:
 
 eos:
   stage: report
+  image: python:3.12.0b2-slim-buster
+  before_script:
+    - yum update
+    - yum install -y sshpass
+    - yum install -y git
   script:
     - python3 eos.py -s $SUBGROUP
   parallel:
@@ -35,6 +34,11 @@ eos:
 
 git:
   stage: git
+  image: python:3.12.0b2-slim-buster
+  before_script:
+    - yum update
+    - yum install -y sshpass
+    - yum install -y git
   script:
     - git config user.email "exotics.diskspace.watcher@cern.ch"
     - git config user.name "ExoticsDiskspaceWatcher"
