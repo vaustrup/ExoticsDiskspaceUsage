@@ -9,13 +9,16 @@ stages:
   - report
   - git
 
-cernprod:
+grid:
   stage: report
   script:
-    - python3 gridspace.py --rse CERN-PROD_PHYS-EXOTICS
+    - python3 gridspace.py --rse $DISK
+  parallel:
+    matrix:
+      - DISK: [CERN-PROD_PHYS-EXOTICS, TOKYO-LCG2_PHYS-EXOTICS]
   artifacts:
     paths:
-      - ./reports/CERN-PROD_PHYS-EXOTICS.csv
+      - ./reports/$DISK.csv
     expire_in: 24h
 
 eos:
