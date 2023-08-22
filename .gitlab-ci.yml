@@ -5,6 +5,12 @@ stages:
 grid:
   stage: report
   image: atlas/rucio-clients
+  before_script:
+    - mkdir -p ${HOME}/.globus
+    - base64 -d $USERCERT > ${HOME}/.globus/usercert.pem
+    - base64 -d $USERKEY > ${HOME}/.globus/userkey.pem
+    - chmod 600 ${HOME}/.globus/userkey.pem
+    - echo $PASSWORD | voms-proxy-init -voms atlas
   script:
     - python3 gridspace.py --rse $DISK
   parallel:
