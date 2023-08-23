@@ -22,7 +22,7 @@ grid_test:
   rules:
     - if: $CI_PIPELINE_SOURCE == "merge_request_event"
 
-eos:
+eos_test:
   stage: test
   image: python:3.12.0b2-slim-buster
   before_script:
