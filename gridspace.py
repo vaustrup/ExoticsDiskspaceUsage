@@ -90,7 +90,7 @@ class GridSpaceAnalyser:
         try:
             replica_information = next(self._client.list_replication_rules(filters={"scope": scope, "name": name, "rse_expression": self._rse}))
             if replica_information["expires_at"] is None:
-                log.info(f"Rule for file {name} in scope {scope} will never expire.")
+                log.debug(f"Rule for file {name} in scope {scope} will never expire.")
                 return False
         except StopIteration:
             log.debug(f"Rule for file {name} in scope {scope} for site {self._rse} has been deleted or has never existed in the first place.")
