@@ -4,13 +4,15 @@ stages:
 
 grid:
   stage: report
-  image: atlas/rucio-clients
+  image: gitlab-registry.cern.ch/vaustrup/rucio-clients:latest
   before_script:
     - mkdir -p ${HOME}/.globus
     - base64 -d $USERCERT > ${HOME}/.globus/usercert.pem
     - base64 -d $USERKEY > ${HOME}/.globus/userkey.pem
     - chmod 600 ${HOME}/.globus/userkey.pem
-    - echo $PASSWORD | voms-proxy-init -voms atlas
+    - export X509_USER_PROXY=X509_USER_PROXY
+    - echo $PASSWORD | voms-proxy-init -voms atlas --out /home/user/$X509_USER_PROXY
+    - export RUCIO_ACCOUNT=vaustrup
   script:
     - python3 gridspace.py --rse $DISK
   parallel:
@@ -28,7 +30,6 @@ eos:
   before_script:
     - apt-get update
     - apt-get install -y sshpass
-    - apt-get install -y git
   script:
     - python3 eos.py -s $SUBGROUP
   parallel:
@@ -44,7 +45,6 @@ git:
   image: python:3.12.0b2-slim-buster
   before_script:
     - apt-get update
-    - apt-get install -y sshpass
     - apt-get install -y git
   script:
     - git config user.email "exotics.diskspace.watcher@cern.ch"
