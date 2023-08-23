@@ -11,7 +11,7 @@ grid:
     - base64 -d $USERKEY > ${HOME}/.globus/userkey.pem
     - chmod 600 ${HOME}/.globus/userkey.pem
     - export X509_USER_PROXY=X509_USER_PROXY
-    - echo $PASSWORD | voms-proxy-init -voms atlas --out /home/user/$X509_USER_PROXY
+    - echo $PASSWORD | voms-proxy-init -voms atlas --out /builds/vaustrup/exoticsdiskspaceusage/$X509_USER_PROXY
     - export RUCIO_ACCOUNT=vaustrup
   script:
     - python3 gridspace.py --rse $DISK
