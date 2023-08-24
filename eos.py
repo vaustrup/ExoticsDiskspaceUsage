@@ -12,7 +12,8 @@ DIRECTORY = "/eos/atlas/atlascerngroupdisk/phys-exotics/"
 
 def check_subgroup(subgroup):
     log.info(f"Checking subgroup {subgroup}.")
-    COMMAND = f"for dir in {DIRECTORY}/{subgroup}/*/; do find \$dir -type f | wc -l; du -sh \$dir; done"
+    # get the used disk space in units of kilobytes
+    COMMAND = f"for dir in {DIRECTORY}/{subgroup}/*/; do find \$dir -type f | wc -l; du -s -B 1024 \$dir; done"
     ssh_command = f'sshpass -p {PASSWORD} ssh -o StrictHostKeyChecking=no exowatch@lxplus.cern.ch "{COMMAND}"'
     result = subprocess.run(ssh_command, shell=True, capture_output=True, text=True)
     content = [item for item in result.stdout.split("\n") if item!=""]
@@ -30,6 +31,7 @@ def check_subgroup(subgroup):
 
     with open(f'reports/{subgroup}.csv', 'w') as f:
         writer = csv.writer(f, delimiter=',')
+        writer.writerow(["Analysis", "Total size in kB", "Number of files"])
         for i in range(0, len(analysis_names)):
             writer.writerow([analysis_names[i], sizes[i], numbers[i]])
 
