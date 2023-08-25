@@ -1,6 +1,7 @@
 stages:
   - report
-  - git
+  - plot
+  - commit
   - test
 
 # run tests only for merge requests
@@ -78,8 +79,24 @@ eos:
   rules:
     - if: $CI_PIPELINE_SOURCE == "schedule"
 
-git:
-  stage: git
+plot:
+  stage: plot
+  image: python:3.12.0b2-slim-buster
+  before_script:
+    - pip3 install --upgrade pip
+    - pip3 install matplotlib
+  script:
+    - python3 plots.py
+  artifacts:
+    paths:
+      - ./reports/*.pdf
+    expire_in: 24h
+  retry: 1 # sometimes there are issues e.g. when pulling docker image
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "schedule"
+
+commit:
+  stage: commit
   image: python:3.12.0b2-slim-buster
   before_script:
     - apt-get update
@@ -89,6 +106,7 @@ git:
     - git config user.name "ExoticsDiskspaceWatcher"
     - git remote add gitlab_origin https://oauth2:$ACCESS_TOKEN@gitlab.cern.ch/vaustrup/exoticsdiskspaceusage.git
     - git add reports/*.csv
+    - git add reports/*.pdf
     # commit and push only if changes present
     # https://stackoverflow.com/questions/22040113/how-to-let-jenkins-git-commit-only-if-there-are-changes
     - git diff --staged --quiet || (git commit -m "update subgroup data (`date +'%Y-%m-%d'`)" && git push -o ci.skip gitlab_origin HEAD:main)
