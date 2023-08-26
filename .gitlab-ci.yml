@@ -83,10 +83,12 @@ plot:
   stage: plot
   image: python:3.12.0b2-slim-buster
   before_script:
-    - pip3 install --upgrade pip
-    - pip3 install matplotlib
+    - python3 -m venv venv
+    - source venv/bin/activate
+    - pip install --upgrade pip
+    - pip install matplotlib
   script:
-    - python3 plots.py
+    - python plots.py
   artifacts:
     paths:
       - ./reports/*.pdf
