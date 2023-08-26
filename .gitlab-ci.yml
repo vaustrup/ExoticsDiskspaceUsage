@@ -96,6 +96,7 @@ plot:
   retry: 1 # sometimes there are issues e.g. when pulling docker image
   rules:
     - if: $CI_PIPELINE_SOURCE == "schedule"
+  allow_failure: True
 
 commit:
   stage: commit
