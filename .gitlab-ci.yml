@@ -30,7 +30,7 @@ eos_test:
     - apt-get update
     - apt-get install -y sshpass
   script:
-    - python3 eos.py -s cdm
+    - python3 eos.py -s cdm --sshpass
   retry: 1 # sometimes there are issues e.g. when pulling docker image
   rules:
     - if: $CI_PIPELINE_SOURCE == "merge_request_event"
@@ -67,7 +67,7 @@ eos:
     - apt-get update
     - apt-get install -y sshpass
   script:
-    - python3 eos.py -s $SUBGROUP
+    - python3 eos.py -s $SUBGROUP --sshpass
   parallel:
     matrix:
       - SUBGROUP: [cdm, hqt, jdm, lpx, ueh]
