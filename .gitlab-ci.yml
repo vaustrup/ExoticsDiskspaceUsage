@@ -109,6 +109,7 @@ commit:
     - git config user.name "ExoticsDiskspaceWatcher"
     - git remote add gitlab_origin https://oauth2:$ACCESS_TOKEN@gitlab.cern.ch/vaustrup/exoticsdiskspaceusage.git
     - git add reports/*.csv
+    - git add reports/*.table
     # - git add reports/*.pdf
     # commit and push only if changes present
     # https://stackoverflow.com/questions/22040113/how-to-let-jenkins-git-commit-only-if-there-are-changes
