@@ -74,6 +74,7 @@ eos:
   artifacts:
     paths:
       - ./reports/$SUBGROUP.csv
+      - ./reports/$SUBGROUP.table
     expire_in: 24h
   retry: 1 # sometimes there are issues e.g. when pulling docker image
   rules:
