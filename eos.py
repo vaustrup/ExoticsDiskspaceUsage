@@ -10,6 +10,24 @@ PASSWORD = os.getenv('PASSWORD')
 DIRECTORY = "/eos/atlas/atlascerngroupdisk/phys-exotics/"
 
 
+def convert_units(size: int):
+    '''
+    Converts size given in kB into more adequate units
+    Arguments:
+        size: int -> size to convert, given in kB
+    Return:
+        string consisting of number and unit
+    '''
+    CONVERSION_FACTOR = 1024
+    UNITS = ['kB', 'MB', 'GB', 'TB', 'PB']
+    x = size
+    i_unit = 0
+    while x/CONVERSION_FACTOR > CONVERSION_FACTOR:
+        x = x/CONVERSION_FACTOR
+        i_unit += 1
+    return f'{x} {UNITS[i_unit]}'
+
+
 def check_subgroup(subgroup, sshpass=False):
     log.info(f"Checking subgroup {subgroup}.")
     # get the used disk space in units of kilobytes
@@ -26,7 +44,7 @@ def check_subgroup(subgroup, sshpass=False):
     while i in range(0, len(content)):
         numbers.append(content[i])
         size, name = content[i+1].split('\t')
-        sizes.append(size)
+        sizes.append(int(size))
         analysis_names.append(os.path.basename(os.path.normpath(name)))
         i+=2
 
@@ -37,9 +55,9 @@ def check_subgroup(subgroup, sshpass=False):
             writer.writerow([analysis_names[i], sizes[i], numbers[i]])
 
     with open(f'reports/{subgroup}.table', 'w') as f:
-        f.write('| *Analysis Team* | *Disk Usage in kB* | *Number of Files* |')
+        f.write('| *Analysis Team* | *Disk Usage* | *Number of Files* |')
         for i in range(0, len(analysis_names)):
-            f.write(f'\n| {analysis_names[i]} | {sizes[i]} | {numbers[i]} |')
+            f.write(f'\n| {analysis_names[i]} | {convert_units(sizes[i])} | {numbers[i]} |')
 
 subgroups = ["cdm", "hqt", "jdm", "lpx", "ueh"]
 parser = argparse.ArgumentParser()

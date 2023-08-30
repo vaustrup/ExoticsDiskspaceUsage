@@ -80,6 +80,18 @@ eos:
   rules:
     - if: $CI_PIPELINE_SOURCE == "schedule"
 
+csv_to_twiki:
+  stage: report
+  image: python:3.12.0b2-slim-buster
+  script:
+    - python3 helpers/csv_to_twiki.py --file lookup_table.csv
+  artifacts:
+    paths:
+      - ./reports/lookup_table.table
+    expire_in: 24h
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "schedule"
+
 plot:
   stage: plot
   image: python:3.12.0b2-slim-buster
