@@ -49,11 +49,13 @@ grid:
     - export RUCIO_ACCOUNT=vaustrup
   script:
     - python3 gridspace.py --rse $DISK
+    - python3 helpers/csv_to_twiki.py --file reports/$DISK.csv --delimiter , --highlight-header
   parallel:
     matrix:
       - DISK: [CERN-PROD_PHYS-EXOTICS, TOKYO-LCG2_PHYS-EXOTICS]
   artifacts:
     paths:
+      - ./reports/$DISK.csv
       - ./reports/$DISK.csv
     expire_in: 24h
   retry: 1 # sometimes there are issues e.g. when pulling docker image
@@ -68,6 +70,7 @@ eos:
     - apt-get install -y sshpass
   script:
     - python3 eos.py -s $SUBGROUP --sshpass
+    - python3 helpers/csv_to_twiki.py --file reports/$SUBGROUP.csv --delimiter , --highlight-header
   parallel:
     matrix:
       - SUBGROUP: [cdm, hqt, jdm, lpx, ueh]

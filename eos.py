@@ -54,11 +54,6 @@ def check_subgroup(subgroup, sshpass=False):
         for i in range(0, len(analysis_names)):
             writer.writerow([analysis_names[i], sizes[i], numbers[i]])
 
-    with open(f'reports/{subgroup}.table', 'w') as f:
-        f.write('| *Analysis Team* | *Disk Usage* | *Number of Files* |')
-        for i in range(0, len(analysis_names)):
-            f.write(f'\n| {analysis_names[i]} | {convert_units(sizes[i])} | {numbers[i]} |')
-
 subgroups = ["cdm", "hqt", "jdm", "lpx", "ueh"]
 parser = argparse.ArgumentParser()
 parser.add_argument("-s", "--subgroups", nargs="+", default=subgroups, help="Specify subgroups to check")
