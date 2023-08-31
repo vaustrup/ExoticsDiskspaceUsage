@@ -106,6 +106,7 @@ class GridSpaceAnalyser:
         log.info(f"Creating report for {self._rse}.")
         with open(f'reports/{self._rse}.csv', 'w') as f:
             writer = csv.writer(f, delimiter=',')
+            writer.writerow(["Analysis", "Number of Files", "Disk Usage in kB", "Number of Files without Expiration"])
             for name, details in self._analyses.items():
                 writer.writerow([name, details["ntotal"], details["size"], details["ntotal_nolimit"]])
                 log.info(f"{name}  {details['ntotal']} {details['size']} {details['ntotal_nolimit']}")
