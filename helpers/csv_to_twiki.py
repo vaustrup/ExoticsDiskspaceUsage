@@ -48,15 +48,20 @@ with open(outputfile, "w") as f_out:
             n_missing_columns = max_columns - len(line)
             line.extend(n_missing_columns * [" "])
             
+            # need to escape vertical bar characters as they are used in TWiki table syntax
+            escaped_line = [l.replace("|", "%VBAR%") for l in line]
+            
             # highlight headers
             if first_line:
                 first_line = False
                 if args.highlight_header:
                     log.info(f"Highlighting header row.")
-                    f_out.write(f"| * {' * | * '.join(line)} * |\n")
+                    row = f"| * {' * | * '.join(escaped_line)} * |\n"
+                    f_out.write(row)
                     continue
 
             # else, just write out the line in TWiki table format
-            f_out.write(f"| {' | '.join(line)} |\n")
+            row = f"| {' | '.join(escaped_line)} |\n"
+            f_out.write(row)
 
 log.info(f"Closing output file {outputfile}.")

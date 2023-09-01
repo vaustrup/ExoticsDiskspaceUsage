@@ -1,19 +1,19 @@
 <!-- This file is created automatically from lookup_table.csv. Do not edit it manually. -->
-| * group.phys-exotics * | * dataset\.toUpload * | *  * |
+| * group.phys-exotics * | * dataset\.toUpload * | *   * |
 | group.phys-exotics | HBSM4t | ANA-EXOT-2019-26 |
-| group.phys-exotics | MultiLeptonAnalysisLight |  |
-| group.phys-exotics | MultiLeptonAnalysis\.v3 |  |
-| group.phys-exotics | MultiLeptonAnalysis\.v1 |  |
+| group.phys-exotics | MultiLeptonAnalysisLight |   |
+| group.phys-exotics | MultiLeptonAnalysis\.v3 |   |
+| group.phys-exotics | MultiLeptonAnalysis\.v1 |   |
 | group.phys-exotics | DiJetISR | ANA-EXOT-2022-33 |
-| group.phys-exotics | \.2019\.8\.08 |  |
-| group.phys-exotics | HFInputs |  |
-| group.phys-exotics | VLQSubmission |  |
-| group.phys-exotics | Jul2020Prod_mc16[ade] |  |
+| group.phys-exotics | \.2019\.8\.08 |   |
+| group.phys-exotics | HFInputs |   |
+| group.phys-exotics | VLQSubmission |   |
+| group.phys-exotics | Jul2020Prod_mc16[ade] |   |
 | group.phys-exotics | Jul2020Prod_FINAL | ANA-EXOT-2019-27 |
-| group.phys-exotics | 3jin_1bin_1Win_ETmiss60_2021__June21v2_2021_wtsys1_Wjets |  |
+| group.phys-exotics | 3jin_1bin_1Win_ETmiss60_2021__June21v2_2021_wtsys1_Wjets |   |
 | user.mlassnig | pilot\.test\.single\.hits | GENERAL |
-| user.fcirotto | (?:MJA\.275|EXOT-2018-06) | ANA-EXOT-2018-06 |
-| user.gonzales | (?:Jul2020Prod_FINAL|user.gonzales.Jan2020Prod_mc16a) | ANA-EXOT-2019-27 |
+| user.fcirotto | (?:MJA\.275%VBAR%EXOT-2018-06) | ANA-EXOT-2018-06 |
+| user.gonzales | (?:Jul2020Prod_FINAL%VBAR%user.gonzales.Jan2020Prod_mc16a) | ANA-EXOT-2019-27 |
 | user.jobalz | Znunu_PTV_mc16a_Jul2020Prod_FINAL | ANA-EXOT-2019-27 |
 | user.ehaaland | BKGSYSTmc16 | ANA-EXOT-2020-10 |
 | user.aakilgal | EJsAna | ANA-EXOT-2018-20 |
