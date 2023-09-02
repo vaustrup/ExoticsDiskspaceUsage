@@ -56,7 +56,7 @@ grid:
   artifacts:
     paths:
       - ./reports/$DISK.csv
-      - ./reports/$DISK.csv
+      - ./reports/$DISK.table
     expire_in: 24h
   retry: 1 # sometimes there are issues e.g. when pulling docker image
   rules:
