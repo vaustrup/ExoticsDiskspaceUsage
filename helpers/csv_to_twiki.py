@@ -49,7 +49,7 @@ with open(outputfile, "w") as f_out:
             line.extend(n_missing_columns * [" "])
             
             # need to escape vertical bar characters as they are used in TWiki table syntax
-            escaped_line = [l.replace("|", "%VBAR%") for l in line]
+            escaped_line = [l.replace("|", "&#124;") for l in line]
             
             # highlight headers
             if first_line:
