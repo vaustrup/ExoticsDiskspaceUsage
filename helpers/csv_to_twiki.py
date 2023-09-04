@@ -26,7 +26,6 @@ outputfile = f"reports/{inputfile.stem}.table"
 log.info(f"Converting csv file {args.file} into TWiki-table syntax. Output stored in {outputfile}.")
 
 with open(outputfile, "w") as f_out:
-    f_out.write(f"<!-- This file is created automatically from {inputfile}. Do not edit it manually. -->\n")
     with open(inputfile, "r") as f_in:
         log.info(f"Opening input file {args.file}.")
         reader = csv.reader(f_in, delimiter=args.delimiter)
@@ -64,4 +63,6 @@ with open(outputfile, "w") as f_out:
             row = f"| {' | '.join(escaped_line)} |\n"
             f_out.write(row)
 
+    f_out.write(f"<!-- This file was created automatically from {inputfile}. Do not edit it manually. -->\n")
+ 
 log.info(f"Closing output file {outputfile}.")
