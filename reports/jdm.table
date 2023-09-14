@@ -1,11 +1,11 @@
 | * Analysisi Team * | * Disk Usage in kB * | * Number of files * |
 | LeptonPlusJet | 443131980 | 36 |
 | MultiBJet | 191101775 | 136 |
-| SC_NCBH_NMDS | 1768240076 | 66453 |
+| SC_NCBH_NMDS | 1768240076 | 66625 |
 | dibjet | 742471300 | 2791 |
 | dijet | 7949817146 | 73860 |
 | dijetISR | 1469940185 | 2619 |
-| lepdijet | 2192803428 | 47963 |
+| lepdijet | 2192470132 | 47973 |
 | monoHiggs | 224283195 | 10019 |
 | monoSWW | 599781054 | 51491 |
 | monoSbb | 4 | 0 |
