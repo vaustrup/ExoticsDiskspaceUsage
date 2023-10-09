@@ -1,7 +1,7 @@
 | * Analysisi Team * | * Disk Usage in kB * | * Number of files * |
-| LeptonPlusJet | 443131980 | 36 |
+| LeptonPlusJet | 974733421 | 51 |
 | MultiBJet | 177908480 | 116 |
-| SC_NCBH_NMDS | 1771358971 | 67084 |
+| SC_NCBH_NMDS | 1771359417 | 67105 |
 | dibjet | 742471300 | 2791 |
 | dijet | 7949817146 | 73860 |
 | dijetISR | 1469940185 | 2619 |
@@ -12,8 +12,8 @@
 | monoV | 4 | 0 |
 | monojet | 5640968423 | 234475 |
 | photonPlusJet | 4 | 0 |
-| qgdijet | 4424450320 | 416655 |
-| svjets-schannel | 1847256189 | 6138 |
+| qgdijet | 4417878289 | 22650 |
+| svjets-schannel | 1893746070 | 6480 |
 | svjets | 1679450061 | 32875 |
 | vbfinv | 30826126 | 4649 |
 <!-- This file was created automatically from reports/jdm.csv. Do not edit it manually. -->
