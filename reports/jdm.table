@@ -1,6 +1,6 @@
 | * Analysisi Team * | * Disk Usage in kB * | * Number of files * |
-| ANA-EXOT-2023-25_mono-b-c | 91809031 | 60 |
-| LeptonPlusJet | 1595004501 | 91 |
+| ANA-EXOT-2023-25_mono-b-c | 95529119 | 63 |
+| LeptonPlusJet | 1624517802 | 92 |
 | MultiBJet | 266226924 | 125 |
 | SC_NCBH_NMDS | 1796719993 | 91114 |
 | dibjet | 742471300 | 2791 |
@@ -14,7 +14,7 @@
 | monojet | 5451109152 | 233007 |
 | photonPlusJet | 4 | 0 |
 | qgdijet | 8213303868 | 225801 |
-| svjets-schannel | 2180962596 | 8243 |
+| svjets-schannel | 2211270421 | 8355 |
 | svjets | 1679450061 | 32875 |
 | vbfinv | 30826126 | 4649 |
 <!-- This file was created automatically from reports/jdm.csv. Do not edit it manually. -->
