@@ -1,10 +1,10 @@
 | * Analysisi Team * | * Disk Usage in kB * | * Number of files * |
 | ANA-EXOT-2023-25_mono-b-c | 182178545 | 195 |
-| dibjet | 742471300 | 2784 |
+| dibjet | 742471300 | 2791 |
 | dijet | 7949817329 | 73867 |
 | dijetISR | 1617566276 | 5611 |
-| lepdijet | 2169085895 | 57465 |
-| LeptonPlusJet | 1450742982 | 77 |
+| lepdijet | 2169405047 | 57809 |
+| LeptonPlusJet | 1624958120 | 79 |
 | monoHiggs | 224283195 | 10019 |
 | monojet | 5451109152 | 233007 |
 | monoSbb | 4 | 0 |
@@ -13,8 +13,8 @@
 | MultiBJet | 464597422 | 555 |
 | photonPlusJet | 4 | 0 |
 | qgdijet | 8213303868 | 225801 |
-| SC_NCBH_NMDS | 1810880509 | 101130 |
+| SC_NCBH_NMDS | 1810882006 | 101180 |
 | svjets | 1679450061 | 32875 |
-| svjets-schannel | 2373947055 | 9761 |
+| svjets-schannel | 2455688498 | 10553 |
 | vbfinv | 30826126 | 4649 |
 <!-- This file was created automatically from reports/jdm.csv. Do not edit it manually. -->
