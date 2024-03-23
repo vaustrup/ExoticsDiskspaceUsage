@@ -1,6 +1,6 @@
 | * Analysisi Team * | * Disk Usage in kB * | * Number of files * |
 | ANA-EXOT-2023-18 | 577897958 | 412 |
-| ANA-EXOT-2023-25_mono-b-c | 446356137 | 1012 |
+| ANA-EXOT-2023-25_mono-b-c | 446354960 | 997 |
 | dibjet | 742471300 | 2791 |
 | dijet | 7949817329 | 73867 |
 | dijetISR | 1617566276 | 5611 |
@@ -14,8 +14,8 @@
 | MultiBJet | 206826229 | 129 |
 | photonPlusJet | 4 | 0 |
 | qgdijet | 8213303868 | 225801 |
-| SC_NCBH_NMDS | 1863621328 | 146249 |
+| SC_NCBH_NMDS | 1918001714 | 148245 |
 | svjets | 1679450061 | 32875 |
-| svjets-schannel | 946461060 | 6913 |
+| svjets-schannel | 946463403 | 6914 |
 | vbfinv | 30826126 | 4649 |
 <!-- This file was created automatically from reports/jdm.csv. Do not edit it manually. -->
