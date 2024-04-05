@@ -50,7 +50,7 @@ def check_subgroup(subgroup, sshpass=False):
 
     with open(f'reports/{subgroup}.csv', 'w') as f:
         writer = csv.writer(f, delimiter=',')
-        writer.writerow(["Analysisi Team", "Disk Usage in kB", "Number of files"])
+        writer.writerow(["Analysis Team", "Disk Usage in kB", "Number of files"])
         for i in range(0, len(analysis_names)):
             writer.writerow([analysis_names[i], sizes[i], numbers[i]])
 
