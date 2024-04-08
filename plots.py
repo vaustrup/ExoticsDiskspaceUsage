@@ -16,7 +16,7 @@ log.setLevel(logging.INFO)
 
 SUBGROUPS = ["cdm", "hqt", "jdm", "lpx", "ueh"]
 TODAY = datetime.datetime.now()
-n_days = 2
+NUMBER_OF_DAYS = 100
 
 def sort_analyses(analyses):
     '''
@@ -39,7 +39,7 @@ def get_data_from_git_history(subgroup: str):
     '''
     log.info(f"Collecting information for subgroup {subgroup}.")
     analysis_data = {}
-    for i_day in range(-1,1):
+    for i_day in range(-1,NUMBER_OF_DAYS):
         date = (TODAY - datetime.timedelta(i_day)).strftime("%Y-%m-%d")
         command = f'git show $(git rev-list -1 --before="{date}" HEAD):reports/{subgroup}.csv'
         result = subprocess.run(command, shell=True, capture_output=True, text=True)
@@ -47,7 +47,7 @@ def get_data_from_git_history(subgroup: str):
         analyses = [x for x in result.stdout.split("\n") if x!='']
         for analysis in analyses:
             # skip header of CSV file
-            if analysis == "Analysis,Total size in kB,Number of files":
+            if "Number of files" in analysis:
                 continue
             # Analysis name is first column, disk space second column, and number of files third column
             data = analysis.split(",")
@@ -73,7 +73,7 @@ for subgroup in SUBGROUPS:
         plt.plot(dates, sizes, label=name)
     date_formatter = DateFormatter('%Y-%m-%d')
     plt.gca().xaxis.set_major_formatter(date_formatter)
-    plt.gca().xaxis.set_major_locator(DayLocator(interval=1))
+    plt.gca().xaxis.set_major_locator(DayLocator(interval=int(NUMBER_OF_DAYS/10)))
     plt.xlabel("Date")
     plt.ylabel("Disk Space [kB]")
     plt.xticks(rotation=90)
