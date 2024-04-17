@@ -106,10 +106,10 @@ class GridSpaceAnalyser:
         log.info(f"Creating report for {self._rse}.")
         with open(f'reports/{self._rse}.csv', 'w') as f:
             writer = csv.writer(f, delimiter=',')
-            writer.writerow(["Analysis", "Number of Files", "Disk Usage in kB", "Number of Files without Expiration"])
+            writer.writerow(["Analysis", "Number of Files", "Disk Usage in GB", "Number of Files without Expiration"])
             for name, details in self._analyses.items():
-                writer.writerow([name, details["ntotal"], details["size"], details["ntotal_nolimit"]])
-                log.info(f"{name}  {details['ntotal']} {details['size']} {details['ntotal_nolimit']}")
+                writer.writerow([name, details["ntotal"], f'{float(f"{(details['size']/1024.**2):.5g}"):g}', details["ntotal_nolimit"]])
+                log.info(f"{name}  {details['ntotal']} {float(f"{(details['size']/1024.**2):.5g}"):g} {details['ntotal_nolimit']}")
 
 def main():
 

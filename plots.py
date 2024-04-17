@@ -45,14 +45,17 @@ def get_data_from_git_history(subgroup: str):
         result = subprocess.run(command, shell=True, capture_output=True, text=True)
 
         analyses = [x for x in result.stdout.split("\n") if x!='']
+        isInGB = False
         for analysis in analyses:
             # skip header of CSV file
-            if "Number of files" in analysis:
+            if "Disk Usage" in analysis:
+                isInGB = "Disk Usage in GB" in analysis
                 continue
             # Analysis name is first column, disk space second column, and number of files third column
             data = analysis.split(",")
             name = data[0]
-            size = int(data[1])
+            # convert back to kB if disk space given in GB
+            size = int(data[1])/1024**2 if isInGB else int(data[1])
             number_of_files = int(data[2])
             # need to create empty dict for each analysis if it does not exist yet
             if name not in analysis_data:

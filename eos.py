@@ -22,7 +22,7 @@ def convert_units(size: int):
     UNITS = ['kB', 'MB', 'GB', 'TB', 'PB']
     x = size
     i_unit = 0
-    while x/CONVERSION_FACTOR > CONVERSION_FACTOR:
+    while x/CONVERSION_FACTOR > CONVERSION_FACTOR and i_unit < len(UNITS):
         x = x/CONVERSION_FACTOR
         i_unit += 1
     return f'{x} {UNITS[i_unit]}'
@@ -50,9 +50,9 @@ def check_subgroup(subgroup, sshpass=False):
 
     with open(f'reports/{subgroup}.csv', 'w') as f:
         writer = csv.writer(f, delimiter=',')
-        writer.writerow(["Analysis Team", "Disk Usage in kB", "Number of files"])
+        writer.writerow(["Analysis Team", "Disk Usage in GB", "Number of files"])
         for i in range(0, len(analysis_names)):
-            writer.writerow([analysis_names[i], sizes[i], numbers[i]])
+            writer.writerow([analysis_names[i], f'{float(f"{(sizes[i]/1024.**2):.5g}"):g}', numbers[i]])
 
 subgroups = ["cdm", "hqt", "jdm", "lpx", "ueh"]
 parser = argparse.ArgumentParser()
