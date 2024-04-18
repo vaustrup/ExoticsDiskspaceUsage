@@ -1,16 +1,16 @@
-| * Analysis Team * | * Disk Usage in kB * | * Number of files * |
-| ANA-EXOT-2019-35_HNL | 1223707343 | 4200 |
-| ANA-EXOT-2020-06_VBS | 873262 | 1 |
-| ANA-EXOT-2021-15_btaubtau | 1221423301 | 17169 |
-| ANA-EXOT-2021-31_VLLe_mu | 5421154507 | 3715 |
-| ANA-EXOT-2022-34_TauPlusX | 990846861 | 722 |
-| FourLepGeneral | 1299034011 | 12838 |
-| LFVZprime2018 | 4 | 0 |
-| LQCombo | 23898575 | 22641 |
-| LQPP2018 | 3349795280 | 11235 |
-| VLL_4321 | 8513264207 | 12171 |
-| VLLelmu | 200711167 | 605 |
-| wptaunu | 138547938 | 854 |
-| wptaunu2018 | 21614467 | 25 |
-| ZprimePlusX | 2526617557 | 13799 |
+| * Analysis Team * | * Disk Usage in GB * | * Number of files * |
+| ANA-EXOT-2019-35_HNL | 1167 | 4200 |
+| ANA-EXOT-2020-06_VBS | 0.83281 | 1 |
+| ANA-EXOT-2021-31_VLLe_mu | 13582 | 6767 |
+| ANA-EXOT-2022-34_TauPlusX | 944.95 | 722 |
+| FourLepGeneral | 1238.9 | 12838 |
+| LFVZprime2018 | 3.8147e-06 | 0 |
+| LQCombo | 22.791 | 22641 |
+| LQPP2018 | 3194.6 | 11235 |
+| test | 3.8147e-06 | 0 |
+| VLL_4321 | 8118.9 | 12171 |
+| VLLelmu | 191.41 | 605 |
+| wptaunu | 132.13 | 854 |
+| wptaunu2018 | 20.613 | 25 |
+| ZprimePlusX | 2409.6 | 13799 |
 <!-- This file was created automatically from reports/lpx.csv. Do not edit it manually. -->
