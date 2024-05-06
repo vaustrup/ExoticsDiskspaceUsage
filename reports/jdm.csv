@@ -1,13 +1,13 @@
 Analysis Team,Disk Usage in GB,Number of files
 ANA-EXOT-2023-18,551.13,412
-ANA-EXOT-2023-19_allhadMET,17.105,189
+ANA-EXOT-2023-19_allhadMET,17.94,218
 ANA-EXOT-2023-25_mono-b-c,426.17,657
 ANA-EXOT-2024-01_dibjetISR,139.92,152
 dibjet,708.08,2791
 dijet,7581.5,73867
 dijetISR,1542.6,5611
 lepdijet,2067.2,53883
-LeptonPlusJet,1503.4,66
+LeptonPlusJet,1853.6,66
 monoHiggs,213.89,10019
 monojet,5198.6,233018
 monoSbb,3.8147e-06,0
@@ -15,7 +15,7 @@ monoSWW,572,51491
 MultiBJet,197.24,129
 photonPlusJet,3.8147e-06,0
 qgdijet,7832.8,225801
-SC_NCBH_NMDS,2270.9,167476
+SC_NCBH_NMDS,2270.9,168637
 svjets,1601.6,32875
-svjets-schannel,884.02,5992
+svjets-schannel,903.57,6066
 vbfinv,29.398,4649
