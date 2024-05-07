@@ -28,7 +28,15 @@ def convert_units(size: int):
     return f'{x} {UNITS[i_unit]}'
 
 
-def check_subgroup(subgroup, sshpass=False):
+def check_subgroup(subgroup: str, sshpass: bool = False) -> None:
+    '''
+    Compile report for each subgroup, listing disk space and number of files for each analysis in given subgroup.
+    The reports are written to one csv file per subgroup and stored in the directory 'reports/'.
+    Arguments:
+        subgroup: str -> name of subgroup to report on
+        sshpass: bool -> whether to run commands through sshpass, necessary when not running on lxplus (default: False).
+                         if true, log into exowatch lxplus account, using password stored as environment variable        
+    '''
     log.info(f"Checking subgroup {subgroup}.")
     # get the used disk space in units of kilobytes
     COMMAND = f"for dir in {DIRECTORY}/{subgroup}/*/; do find \$dir -type f | wc -l; du -s -B 1024 \$dir; done"
