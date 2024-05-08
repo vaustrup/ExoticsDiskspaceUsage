@@ -4,8 +4,6 @@ import logging
 import re
 import sys
 
-from typing import List
-
 from rucio.client import Client
 
 log = logging.getLogger("gridspace")
@@ -26,6 +24,10 @@ class GridSpaceAnalyser:
         self._rse = rse
 
     def load_lookup_table(self) -> None:
+        '''
+        Tags matched to specific analyses are listed in 'lookup_table.csv' as '<scope> <tag> <glance-code>'.
+        These are loaded into self._scopes in order to match files on the group disk to analyses.
+        '''
         with open('lookup_table.csv') as f:
             r = csv.reader(f, delimiter=' ')
             for row in r:
@@ -42,6 +44,9 @@ class GridSpaceAnalyser:
                     self._analyses[analysis_name] = {"ntotal": 0, "ntotal_nolimit": 0, "size": 0}
 
     def analyse_datasets(self) -> None:
+        '''
+        Loop over all datasets on the RSE and match them to analyses.
+        '''
         for line in self._client.list_datasets_per_rse(rse=self._rse):
             scope = line["scope"]
             if not self.scope_is_valid(scope):
@@ -66,6 +71,13 @@ class GridSpaceAnalyser:
         self.check_obsolete_tags()
 
     def scope_is_valid(self, scope: str) -> bool:
+        '''
+        Check if a given scope is available in the lookup table.
+        Arguments:
+            scope: str -> scope to check
+        Return:
+            True if scope is in the lookup table, False otherwise
+        '''
         if scope not in self._scopes:
             if scope not in self._scopes_not_found:
                 log.warning(f"Could not find scope {scope} in list of scopes.")
@@ -73,7 +85,15 @@ class GridSpaceAnalyser:
             return False
         return True
 
-    def match_tags(self, scope: str, name: str) -> List:
+    def match_tags(self, scope: str, name: str) -> list:
+        '''
+        Match dataset names in a given scope to the tags in the lookup table.
+        Arguments:
+            scope: str -> scope to match
+            name: str -> name of dataset to match
+        Return:
+            list of tags matching given name in the given scope
+        '''
         matching_tags = []
         for tag in self._scopes[scope]:
             if re.search(tag, name) is not None:
@@ -81,12 +101,20 @@ class GridSpaceAnalyser:
                 self._scopes[scope][tag]["tag_found"] = True
         if len(matching_tags) == 0:
             log.warning(f"Could not find any tags for file {name} in scope {scope}.")
-            return
+            return []
         if len(matching_tags) > 1:
             log.warning(f"Found multiple tags matching file {name} in scope {scope}.")
         return matching_tags
 
     def replica_lifetime_is_limited(self, scope: str, name: str) -> bool:
+        '''
+        Check if the lifetime of a given dataset is limited on the group disk
+        Arguments:
+            scope: str -> scope to check
+            name: str -> name of dataset to check
+        Return:
+            True if lifetime of dataset on group disk is limited, False otherwise
+        '''
         try:
             replica_information = next(self._client.list_replication_rules(filters={"scope": scope, "name": name, "rse_expression": self._rse}))
             if replica_information["expires_at"] is None:
@@ -97,12 +125,20 @@ class GridSpaceAnalyser:
         return True
 
     def check_obsolete_tags(self) -> None:
-        for scope, tags in self._scopes.items():
+        '''
+        Print a warning if a tag in the lookup table was not found in any of the samples.
+        This can mean it is obsolete and should be removed from the lookup table, or it points to a typo. 
+        Either way, make sure to check if this warning is raised in order to keep things organised.
+        '''
+        for _, tags in self._scopes.items():
             for tag, details in tags.items():
                 if not details["tag_found"]:
                     log.warning(f"Tag {tag} was not found in any of the samples. Maybe it is obsolete?")
 
     def report(self) -> None:
+        '''
+        Create report for each RSE, stored as CSV file in 'reports/'
+        '''
         log.info(f"Creating report for {self._rse}.")
         with open(f'reports/{self._rse}.csv', 'w') as f:
             writer = csv.writer(f, delimiter=',')
