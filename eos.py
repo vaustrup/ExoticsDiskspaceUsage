@@ -47,7 +47,7 @@ def glance_ref_from_name(name: str) -> str:
     if name not in GLANCE_CODES.keys():
         log.warning(f"Could not find Glance reference code for analysis {name}.")
         return ""
-    return GLANCE_CODES[name]
+    return GLANCE_CODES[name].replace(",","/")
 
 
 def check_subgroup(subgroup: str, sshpass: bool = False) -> None:
@@ -61,7 +61,7 @@ def check_subgroup(subgroup: str, sshpass: bool = False) -> None:
     '''
     log.info(f"Checking subgroup {subgroup}.")
     # get the used disk space in units of kilobytes
-    COMMAND = f"for dir in {DIRECTORY}/{subgroup}/*/; do find $dir -type f | wc -l; du -s -B 1024 $dir; done"
+    COMMAND = f"for dir in {DIRECTORY}/{subgroup}/*/; do find \\$dir -type f | wc -l; du -s -B 1024 \\$dir; done"
     pass_command = f"sshpass -p {PASSWORD} " if sshpass else ""
     ssh_command = f'{pass_command}ssh -o StrictHostKeyChecking=no exowatch@lxplus.cern.ch "{COMMAND}"'
     result = subprocess.run(ssh_command, shell=True, capture_output=True, text=True)
