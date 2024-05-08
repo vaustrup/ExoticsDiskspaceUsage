@@ -1,18 +1,18 @@
-| * Analysis Team * | * Disk Usage in GB * | * Number of files * |
-| ahtottbar | 2094.4 | 151837 |
-| allhad | 640.37 | 289 |
-| ana-exot-2018-60 | 1994.3 | 1312 |
-| ANA-EXOT-2021-02_singleVLQcombination | 0.47149 | 210 |
-| ANA-EXOT-2022-44_multitop | 798.58 | 1693 |
-| DarkMesons | 1182.4 | 75527 |
-| hbsm-4tops | 2925.7 | 4652 |
-| mltutorial2022 | 1.4842 | 10 |
-| OSML | 8099 | 24643 |
-| ttbarres_DM | 255.77 | 36774 |
-| ttreshad_2018 | 582.26 | 26352 |
-| ttRes_semilep | 1060 | 163817 |
-| twmetboosted | 2584.2 | 146959 |
-| WbX | 2784.8 | 92461 |
-| WqX | 3114.5 | 5796 |
-| WtMet | 1623.7 | 39190 |
+| * Analysis Team * | * Disk Usage in GB * | * Number of files * | * Glance code * |
+| ahtottbar | 2094.4 | 151834 | ANA-EXOT-2020-25 |
+| allhad | 640.37 | 289 | ANA-EXOT-2019-07 |
+| ana-exot-2018-60 | 1994.3 | 1312 | ANA-EXOT-2018-60 |
+| ANA-EXOT-2021-02_singleVLQcombination | 0.47149 | 210 |  |
+| ANA-EXOT-2022-44_multitop | 798.58 | 1693 | ANA-EXOT-2022-44 |
+| DarkMesons | 1182.4 | 75527 | ANA-EXOT-2019-17 |
+| hbsm-4tops | 2925.7 | 4652 | ANA-EXOT-2019-26 |
+| mltutorial2022 | 1.4842 | 10 | N/A |
+| OSML | 8099 | 24643 | ANA-EXOT-2018-58/ANA-EXOT-2020-01 |
+| ttbarres_DM | 255.77 | 36774 | ANA-EXOT-2018-48 |
+| ttreshad_2018 | 582.26 | 26352 | ANA-EXOT-2018-48 |
+| ttRes_semilep | 1060 | 163817 | ANA-EXOT-2018-49 |
+| twmetboosted | 2584.2 | 146959 | ANA-EXOT-2021-01 |
+| WbX | 2784.8 | 92461 | ANA-EXOT-2019-6 |
+| WqX | 3114.5 | 5796 | ANA-EXOT-2021-35 |
+| WtMet | 1623.7 | 39190 | ANA-EXOT-2018-43 |
 <!-- This file was created automatically from reports/hqt.csv. Do not edit it manually. -->
