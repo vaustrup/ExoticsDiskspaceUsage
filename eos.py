@@ -18,5 +18,3 @@ analyser = EOSAnalyser(directory="/eos/atlas/atlascerngroupdisk/phys-exotics/")
 
 for subgroup in args.subgroups:
     analyser.check_subgroup(subgroup, sshpass=args.sshpass)
-
-print(analyser._analyses_without_glance)
