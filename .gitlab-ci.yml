@@ -3,6 +3,7 @@ stages:
   - plot
   - commit
   - test
+  - email
 
 # run tests only for merge requests
 # not necessary to commit reports in that case
@@ -61,7 +62,7 @@ grid:
     expire_in: 24h
   retry: 1 # sometimes there are issues e.g. when pulling docker image
   rules:
-    - if: $CI_PIPELINE_SOURCE == "schedule"
+    - if: $CI_PIPELINE_SOURCE == "schedule" && $CI_PIPELINE_TIMING == "daily"
 
 eos:
   stage: report
@@ -69,6 +70,7 @@ eos:
   before_script:
     - apt-get update
     - apt-get install -y sshpass
+    - pip3 install python-gitlab
   script:
     - python3 eos.py -s $SUBGROUP --sshpass --report-in-gitlab
     - python3 helpers/csv_to_twiki.py --file reports/$SUBGROUP.csv --delimiter , --highlight-header
@@ -82,7 +84,7 @@ eos:
     expire_in: 24h
   retry: 1 # sometimes there are issues e.g. when pulling docker image
   rules:
-    - if: $CI_PIPELINE_SOURCE == "schedule"
+    - if: $CI_PIPELINE_SOURCE == "schedule" && $CI_PIPELINE_TIMING == "daily"
 
 csv_to_twiki:
   stage: report
@@ -94,7 +96,7 @@ csv_to_twiki:
       - ./reports/lookup_table.table
     expire_in: 24h
   rules:
-    - if: $CI_PIPELINE_SOURCE == "schedule"
+    - if: $CI_PIPELINE_SOURCE == "schedule" && $CI_PIPELINE_TIMING == "daily"
 
 plot:
   stage: plot
@@ -112,7 +114,7 @@ plot:
     expire_in: 24h
   retry: 1 # sometimes there are issues e.g. when pulling docker image
   rules:
-    - if: $CI_PIPELINE_SOURCE == "schedule"
+    - if: $CI_PIPELINE_SOURCE == "schedule" && $CI_PIPELINE_TIMING == "daily"
   allow_failure: True
 
 commit:
@@ -132,4 +134,12 @@ commit:
     # https://stackoverflow.com/questions/22040113/how-to-let-jenkins-git-commit-only-if-there-are-changes
     - git diff --staged --quiet || (git commit -m "update subgroup data (`date +'%Y-%m-%d'`)" && git push -o ci.skip gitlab_origin HEAD:main)
   rules:
-    - if: $CI_PIPELINE_SOURCE == "schedule"
+    - if: $CI_PIPELINE_SOURCE == "schedule" && $CI_PIPELINE_TIMING == "daily"
+
+email:
+  stage: email
+  image: python:3.12.0b2-slim-buster
+  script:
+    - python3 send_weekly_report.py
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "schedule" && $CI_PIPELINE_TIMING == "weekly"
