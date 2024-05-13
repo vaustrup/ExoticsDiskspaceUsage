@@ -15,7 +15,7 @@ grid_test:
     - base64 -d $USERKEY > ${HOME}/.globus/userkey.pem
     - chmod 600 ${HOME}/.globus/userkey.pem
     - export X509_USER_PROXY=X509_USER_PROXY
-    - echo $PASSWORD | voms-proxy-init -voms atlas --out /builds/vaustrup/exoticsdiskspaceusage/$X509_USER_PROXY
+    - echo $PASSWORD | voms-proxy-init -voms atlas --out $CI_PROJECT_DIR/$X509_USER_PROXY
     - export RUCIO_ACCOUNT=vaustrup
   script:
     - python3 gridspace.py --rse TOKYO-LCG2_PHYS-EXOTICS
@@ -29,6 +29,7 @@ eos_test:
   before_script:
     - apt-get update
     - apt-get install -y sshpass
+    - pip3 install python-gitlab
   script:
     - python3 eos.py -s cdm --sshpass
   retry: 1 # sometimes there are issues e.g. when pulling docker image
@@ -45,7 +46,7 @@ grid:
     - base64 -d $USERKEY > ${HOME}/.globus/userkey.pem
     - chmod 600 ${HOME}/.globus/userkey.pem
     - export X509_USER_PROXY=X509_USER_PROXY
-    - echo $PASSWORD | voms-proxy-init -voms atlas --out /builds/vaustrup/exoticsdiskspaceusage/$X509_USER_PROXY
+    - echo $PASSWORD | voms-proxy-init -voms atlas --out $CI_PROJECT_DIR/$X509_USER_PROXY
     - export RUCIO_ACCOUNT=vaustrup
   script:
     - python3 gridspace.py --rse $DISK
@@ -69,7 +70,7 @@ eos:
     - apt-get update
     - apt-get install -y sshpass
   script:
-    - python3 eos.py -s $SUBGROUP --sshpass
+    - python3 eos.py -s $SUBGROUP --sshpass --report-in-gitlab
     - python3 helpers/csv_to_twiki.py --file reports/$SUBGROUP.csv --delimiter , --highlight-header
   parallel:
     matrix:
@@ -123,7 +124,7 @@ commit:
   script:
     - git config user.email "exotics.diskspace.watcher@cern.ch"
     - git config user.name "ExoticsDiskspaceWatcher"
-    - git remote add gitlab_origin https://oauth2:$ACCESS_TOKEN@gitlab.cern.ch/vaustrup/exoticsdiskspaceusage.git
+    - git remote add gitlab_origin https://oauth2:$ACCESS_TOKEN@$CI_SERVER_HOST/$CI_PROJECT_PATH.git
     - git add reports/*.csv
     - git add reports/*.table
     # - git add reports/*.pdf
