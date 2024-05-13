@@ -18,7 +18,7 @@ class EOSAnalyser:
                 code = row[1]
                 self._glance_codes[name] = code
 
-        self._analyses_without_glance = []
+        self._analyses_without_glance: list[str] = []
 
 
     def glance_ref_from_name(self, name: str) -> str:
