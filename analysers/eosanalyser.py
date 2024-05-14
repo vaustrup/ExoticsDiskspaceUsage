@@ -49,7 +49,7 @@ class EOSAnalyser:
         sizes = []
         numbers = []
         while i in range(0, len(content)):
-            numbers.append(content[i])
+            numbers.append(int(content[i]))
             size, name = content[i+1].split('\t')
             sizes.append(int(size))
             analysis_names.append(os.path.basename(os.path.normpath(name)))
