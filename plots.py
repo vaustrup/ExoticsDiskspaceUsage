@@ -54,6 +54,9 @@ def get_data_from_git_history(subgroup: str):
             # Analysis name is first column, disk space second column, and number of files third column
             data = analysis.split(",")
             name = data[0]
+            # we do not want to plot the sum of all analyses in a given subgroup
+            if name == "Total Sum":
+                continue
             # convert back to kB if disk space given in GB
             size = int(data[1])/1024**2 if isInGB else int(data[1])
             number_of_files = int(data[2])

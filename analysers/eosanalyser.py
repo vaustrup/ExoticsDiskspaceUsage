@@ -63,8 +63,12 @@ class EOSAnalyser:
             analysis_names.append(os.path.basename(os.path.normpath(name)))
             i+=2
 
+        total_size = sum(sizes)
+        total_numbers = sum(numbers)
         with open(f'reports/{subgroup}.csv', 'w') as f:
             writer = csv.writer(f, delimiter=',')
             writer.writerow(["Analysis Team", "Disk Usage in GB", "Number of files", "Glance code"])
             for i in range(0, len(analysis_names)):
                 writer.writerow([analysis_names[i], f'{float(f"{(sizes[i]/1024.**2):.5g}"):g}', numbers[i], self.glance_ref_from_name(analysis_names[i])])
+
+        writer.writerow(["Total Sum", f'{float(f"{(total_size/1024.**2):.5g}"):g}', total_numbers, ""])
