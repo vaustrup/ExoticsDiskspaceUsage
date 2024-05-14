@@ -63,4 +63,4 @@ class EOSAnalyser:
             for i in range(0, len(analysis_names)):
                 writer.writerow([analysis_names[i], f'{float(f"{(sizes[i]/1024.**2):.5g}"):g}', numbers[i], self.glance_ref_from_name(analysis_names[i])])
 
-        writer.writerow(["Total Sum", f'{float(f"{(total_size/1024.**2):.5g}"):g}', total_numbers, ""])
+            writer.writerow(["Total Sum", f'{float(f"{(total_size/1024.**2):.5g}"):g}', total_numbers, ""])
