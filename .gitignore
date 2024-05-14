@@ -1,3 +1,8 @@
 venv
 .vscode
 __pycache__
+latex.aux
+latex.tex
+latex.pdf
+latex.log
+latex.out

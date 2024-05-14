@@ -10,7 +10,7 @@ def convert_units(size: int):
     UNITS = ['kB', 'MB', 'GB', 'TB', 'PB']
     x = size
     i_unit = 0
-    while x/CONVERSION_FACTOR > CONVERSION_FACTOR and i_unit < len(UNITS):
+    while x/CONVERSION_FACTOR > 1 and i_unit < len(UNITS):
         x = x/CONVERSION_FACTOR
         i_unit += 1
-    return f'{x} {UNITS[i_unit]}'
+    return f'{round(x/3)*3} {UNITS[i_unit]}'

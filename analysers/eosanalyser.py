@@ -2,6 +2,7 @@ import csv
 import os
 import subprocess
 
+from helpers.constants import GLANCE_CODES
 from helpers.logger import log
 
 class EOSAnalyser:
@@ -9,15 +10,6 @@ class EOSAnalyser:
     def __init__(self, directory: str):
         self._password = os.getenv('PASSWORD')
         self._directory = directory
-       
-        self._glance_codes = {}
-        with open("glance_codes.csv") as f:
-            r = csv.reader(f, delimiter=' ')
-            for row in r:
-                name = row[0]
-                code = row[1]
-                self._glance_codes[name] = code
-
         self._analyses_without_glance: list[str] = []
 
 
@@ -29,11 +21,11 @@ class EOSAnalyser:
         Return:
             Glance reference code as string, empty string if analysis name is not in 'glance_codes.csv'
         '''
-        if name not in self._glance_codes.keys():
+        if name not in GLANCE_CODES.keys():
             log.warning(f"Could not find Glance reference code for analysis {name}.")
             self._analyses_without_glance.append(name)
             return ""
-        return self._glance_codes[name].replace(",","/")
+        return GLANCE_CODES[name].replace(",","/")
 
     def check_subgroup(self, subgroup: str, sshpass: bool = False) -> None:
         '''

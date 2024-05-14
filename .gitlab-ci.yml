@@ -141,5 +141,9 @@ email:
   image: python:3.12.0b2-slim-buster
   script:
     - python3 send_weekly_report.py
+  artifacts:
+    paths:
+      - latex.pdf
+    expire_in: 28d
   rules:
     - if: $CI_PIPELINE_SOURCE == "schedule" && $CI_PIPELINE_TIMING == "weekly"

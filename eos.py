@@ -1,18 +1,18 @@
 import argparse
 
 from analysers.eosanalyser import EOSAnalyser
+from helpers.constants import SUBGROUPS
 from helpers.logger import log
 from helpers.gitlab import report_missing_glance_code
 
-subgroups = ["cdm", "hqt", "jdm", "lpx", "ueh"]
 parser = argparse.ArgumentParser()
-parser.add_argument("-s", "--subgroups", nargs="+", default=subgroups, help="Specify subgroups to check")
+parser.add_argument("-s", "--subgroups", nargs="+", default=SUBGROUPS, help="Specify subgroups to check")
 parser.add_argument("--sshpass", action="store_true", help="Use 'sshpass' utility for ssh password.")
 parser.add_argument("--report-in-gitlab", action="store_true", help="Automatically eport findings (missing information, ...) in Gitlab issue.")
 args = parser.parse_args()
 
 for s in args.subgroups:
-    if s not in subgroups:
+    if s not in SUBGROUPS:
         log.warning(f"Subgroup {s} was not found in list of subgroups.")
         args.subgroups.remove(s)
 
