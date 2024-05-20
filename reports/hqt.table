@@ -1,7 +1,7 @@
 | * Analysis Team * | * Disk Usage in GB * | * Number of files * | * Glance code * |
 | ahtottbar | 2094.4 | 151837 | ANA-EXOT-2020-25 |
 | allhad | 640.37 | 289 | ANA-EXOT-2019-07 |
-| ana-exot-2018-60 | 1995.2 | 1312 | ANA-EXOT-2018-60 |
+| ana-exot-2018-60 | 1994.3 | 1312 | ANA-EXOT-2018-60 |
 | ANA-EXOT-2021-02_singleVLQcombination | 0.47149 | 210 | ANA-EXOT-2021-02 |
 | ANA-EXOT-2022-44_multitop | 798.64 | 1695 | ANA-EXOT-2022-44 |
 | DarkMesons | 1182.4 | 75527 | ANA-EXOT-2019-17 |
@@ -15,5 +15,5 @@
 | WbX | 2784.8 | 92461 | ANA-EXOT-2019-6 |
 | WqX | 3114.5 | 5796 | ANA-EXOT-2021-35 |
 | WtMet | 1623.7 | 39190 | ANA-EXOT-2018-43 |
-| Total Sum | 29743 | 771512 |  |
+| Total Sum | 29742 | 771512 |  |
 <!-- This file was created automatically from reports/hqt.csv. Do not edit it manually. -->
