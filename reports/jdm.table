@@ -4,7 +4,7 @@
 | ANA-EXOT-2023-25_mono-b-c | 1236.7 | 795 | ANA-EXOT-2023-25 |
 | ANA-EXOT-2024-01_dibjetISR | 487.09 | 558 | ANA-EXOT-2024-01 |
 | dibjet | 708.08 | 2791 | ANA-EXOT-2019-03 |
-| dijet | 7581.5 | 73867 | ANA-EXOT-2019-03 |
+| dijet | 7581.5 | 73866 | ANA-EXOT-2019-03 |
 | dijetISR | 1542.6 | 5611 | ANA-EXOT-2019-01 |
 | lepdijet | 2067.2 | 53926 | ANA-EXOT-2018-32/ANA-EXOT-2020-15/ANA-EXOT-2022-07 |
 | LeptonPlusJet | 1853.8 | 67 | ANA-EXOT-2021-30/ANA-EXOT-2022-35 |
@@ -15,9 +15,9 @@
 | MultiBJet | 197.24 | 129 | ANA-EXOT-2018-09 |
 | photonPlusJet | 3.8147e-06 | 0 |  |
 | qgdijet | 7832.8 | 225801 | ANA-EXOT-2019-32 |
-| SC_NCBH_NMDS | 1012.5 | 164318 | ANA-EXOT-2022-21 |
+| SC_NCBH_NMDS | 1012.5 | 164871 | ANA-EXOT-2022-21 |
 | svjets | 1601.6 | 32875 | ANA-EXOT-2022-37 |
 | svjets-schannel | 936.08 | 6139 | ANA-EXOT-2021-19 |
 | vbfinv | 29.398 | 4649 |  |
-| Total Sum | 34102 | 866835 |  |
+| Total Sum | 34102 | 867387 |  |
 <!-- This file was created automatically from reports/jdm.csv. Do not edit it manually. -->
