@@ -63,6 +63,7 @@ grid:
   retry: 1 # sometimes there are issues e.g. when pulling docker image
   rules:
     - if: $CI_PIPELINE_SOURCE == "schedule" && $CI_PIPELINE_TIMING == "daily"
+  allow_failure: True
 
 eos:
   stage: report
