@@ -2,6 +2,7 @@ import os
 
 import gitlab
 
+from helpers.constants import GITLAB_USER_ID
 from helpers.logger import log
 
 
@@ -32,6 +33,8 @@ def get_project():
     gl = gitlab.Gitlab(f'https://{os.getenv("CI_SERVER_HOST")}', private_token=os.getenv('ACCESS_TOKEN'))
     # make sure the exowatch gitlab account is added as member to the project
     project_id = os.getenv('CI_PROJECT_ID')
+    if project_id is None:
+        raise ValueError("Cannot find environment variable 'CI_PROJECT_ID'.")
     log.info(f"Retrieving project with ID {project_id}.")
     project = gl.projects.get(project_id)
     return project
@@ -60,10 +63,9 @@ No information on the Glance code is available in [glance_codes.csv](https://{os
 
     # make sure the issue is correctly assigned to the Exotics disk space manager
     # the user ID can be found in the user's gitlab profile
-    assignee_id = 6032
-    if issue.assignee is None or issue.assignee["id"] != assignee_id:
-        log.info(f"Assigning issue to user with ID {assignee_id}.")
-        issue.assignee_id = assignee_id
+    if issue.assignee is None or issue.assignee["id"] != GITLAB_USER_ID:
+        log.info(f"Assigning issue to user with ID {GITLAB_USER_ID}.")
+        issue.assignee_id = GITLAB_USER_ID
         issue.save()
 
     description = issue.description

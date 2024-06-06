@@ -6,9 +6,9 @@ from helpers.logger import log
 from helpers.gitlab import report_missing_glance_code
 
 parser = argparse.ArgumentParser()
-parser.add_argument("-s", "--subgroups", nargs="+", default=SUBGROUPS, help="Specify subgroups to check")
+parser.add_argument("-s", "--subgroups", nargs="+", default=SUBGROUPS, help="Specify subgroups to check.")
 parser.add_argument("--sshpass", action="store_true", help="Use 'sshpass' utility for ssh password.")
-parser.add_argument("--report-in-gitlab", action="store_true", help="Automatically eport findings (missing information, ...) in Gitlab issue.")
+parser.add_argument("--report-in-gitlab", action="store_true", help="Automatically report findings (missing information, ...) in Gitlab issue.")
 args = parser.parse_args()
 
 for s in args.subgroups:

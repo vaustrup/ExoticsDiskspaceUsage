@@ -4,6 +4,8 @@ import datetime
 TODAY = datetime.datetime.now()
 SUBGROUPS = ["cdm", "hqt", "jdm", "lpx", "ueh"]
 
+GITLAB_USER_ID = 6032
+
 GLANCE_CODES = {}
 with open("glance_codes.csv") as f:
     r = csv.reader(f, delimiter=' ')
