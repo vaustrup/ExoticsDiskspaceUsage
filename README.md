@@ -25,12 +25,10 @@ This script is called daily in the [CI workflow](.gitlab-ci.yml). The available 
   -h, --help            show this help message and exit
   -s SUBGROUPS [SUBGROUPS ...], --subgroups SUBGROUPS [SUBGROUPS ...]
                         Specify subgroups to check.
-  --sshpass             Use 'sshpass' utility for ssh password.
   --report-in-gitlab    Automatically report findings (missing information, ...) in Gitlab issue.
 ```
 
 where `SUBGROUPS` is a list of subgroups to check and defaults to `["cdm", "hqt", "jdm", "lpx", "ueh"]` as defined in [constants.py](constants.py).
-The `--sshpass` option is only to be used in the CI pipeline, as it allows piping the password for logging into `lxplus` directly into `ssh`.
 Similarly, `--report-in-gitlab` is meant to be used in the CI pipeline only. By setting this flag, an issue is created in Gitlab in case of missing information (see below) and assigned to the Exotics disk space manager. For this, the Gitlab user ID is set in [constants.py](constants.py).
 
 The script calls the [EOS Analyser](analysers/eosanalyser.py) which loops through the directories in a given subgroup's folder and tallies the numbers of files as well as the disk space required. For the given subgroup, the data in `reports/<subgroup>.csv` is updated accordingly, including the analysis' Glance code.

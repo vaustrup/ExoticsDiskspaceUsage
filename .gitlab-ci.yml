@@ -26,13 +26,19 @@ grid_test:
 
 eos_test:
   stage: test
-  image: python:3.12.0b2-slim-buster
+  tags:
+    - eos
   before_script:
-    - apt-get update
-    - apt-get install -y sshpass
+    - yum install -y python3-pip
     - pip3 install python-gitlab
+    - echo "${PASSWORD}" | kinit exowatch
   script:
-    - python3 eos.py -s cdm --sshpass
+    - python3 eos.py -s cdm
+  artifacts:
+    paths:
+      - ./reports/cdm.csv
+      - ./reports/cdm.table
+    expire_in: 24h
   retry: 1 # sometimes there are issues e.g. when pulling docker image
   rules:
     - if: $CI_PIPELINE_SOURCE == "merge_request_event"
@@ -69,11 +75,11 @@ eos:
   stage: report
   image: python:3.12.0b2-slim-buster
   before_script:
-    - apt-get update
-    - apt-get install -y sshpass
+    - yum install -y python3-pip
     - pip3 install python-gitlab
+    - echo "${PASSWORD}" | kinit exowatch
   script:
-    - python3 eos.py -s $SUBGROUP --sshpass --report-in-gitlab
+    - python3 eos.py -s $SUBGROUP --report-in-gitlab
     - python3 helpers/csv_to_twiki.py --file reports/$SUBGROUP.csv --delimiter , --highlight-header
   parallel:
     matrix:
@@ -122,8 +128,7 @@ commit:
   stage: commit
   image: python:3.12.0b2-slim-buster
   before_script:
-    - apt-get update
-    - apt-get install -y git
+    - yum install -y git
   script:
     - git config user.email "exotics.diskspace.watcher@cern.ch"
     - git config user.name "ExoticsDiskspaceWatcher"
