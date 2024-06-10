@@ -5,44 +5,6 @@ stages:
   - test
   - email
 
-# run tests only for merge requests
-# not necessary to commit reports in that case
-grid_test:
-  stage: test
-  image: gitlab-registry.cern.ch/vaustrup/rucio-clients:latest
-  before_script:
-    - mkdir -p ${HOME}/.globus
-    - base64 -d $USERCERT > ${HOME}/.globus/usercert.pem
-    - base64 -d $USERKEY > ${HOME}/.globus/userkey.pem
-    - chmod 600 ${HOME}/.globus/userkey.pem
-    - export X509_USER_PROXY=X509_USER_PROXY
-    - echo $PASSWORD | voms-proxy-init -voms atlas --out $CI_PROJECT_DIR/$X509_USER_PROXY
-    - export RUCIO_ACCOUNT=vaustrup
-  script:
-    - python3 gridspace.py --rse TOKYO-LCG2_PHYS-EXOTICS
-  retry: 1 # sometimes there are issues e.g. when pulling docker image
-  rules:
-    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
-
-eos_test:
-  stage: test
-  tags:
-    - eos
-  before_script:
-    - yum install -y python3-pip
-    - pip3 install python-gitlab
-    - echo "${PASSWORD}" | kinit exowatch
-  script:
-    - python3 eos.py -s cdm
-  artifacts:
-    paths:
-      - ./reports/cdm.csv
-      - ./reports/cdm.table
-    expire_in: 24h
-  retry: 1 # sometimes there are issues e.g. when pulling docker image
-  rules:
-    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
-
 # create and commit all reports only on daily schedule
 grid:
   stage: report
@@ -71,6 +33,15 @@ grid:
     - if: $CI_PIPELINE_SOURCE == "schedule" && $CI_PIPELINE_TIMING == "daily"
   allow_failure: True
 
+grid_test:
+  extends: grid
+  stage: test
+  parallel:
+    matrix:
+      - DISK: [TOKYO-LCG2_PHYS-EXOTICS]
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+
 eos:
   stage: report
   tags:
@@ -93,6 +64,15 @@ eos:
   retry: 1 # sometimes there are issues e.g. when pulling docker image
   rules:
     - if: $CI_PIPELINE_SOURCE == "schedule" && $CI_PIPELINE_TIMING == "daily"
+
+eos_test:
+  extends: eos
+  stage: test
+  parallel:
+    matrix:
+      - SUBGROUP: [cdm]
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
 
 csv_to_twiki:
   stage: report
