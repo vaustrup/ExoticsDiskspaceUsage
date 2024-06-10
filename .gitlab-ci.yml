@@ -73,7 +73,8 @@ grid:
 
 eos:
   stage: report
-  image: python:3.12.0b2-slim-buster
+  tags:
+    - eos
   before_script:
     - yum install -y python3-pip
     - pip3 install python-gitlab
