@@ -7,7 +7,6 @@ from helpers.gitlab import report_missing_glance_code
 
 parser = argparse.ArgumentParser()
 parser.add_argument("-s", "--subgroups", nargs="+", default=SUBGROUPS, help="Specify subgroups to check.")
-parser.add_argument("--sshpass", action="store_true", help="Use 'sshpass' utility for ssh password.")
 parser.add_argument("--report-in-gitlab", action="store_true", help="Automatically report findings (missing information, ...) in Gitlab issue.")
 args = parser.parse_args()
 
@@ -19,7 +18,7 @@ for s in args.subgroups:
 analyser = EOSAnalyser(directory="/eos/atlas/atlascerngroupdisk/phys-exotics/")
 
 for subgroup in args.subgroups:
-    analyser.check_subgroup(subgroup, sshpass=args.sshpass)
+    analyser.check_subgroup(subgroup)
 
 if args.report_in_gitlab:
     report_missing_glance_code(analyser._analyses_without_glance)
