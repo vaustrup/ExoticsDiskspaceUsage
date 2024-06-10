@@ -129,7 +129,7 @@ commit:
   stage: commit
   image: python:3.12.0b2-slim-buster
   before_script:
-    - yum install -y git
+    - apt-get install -y git
   script:
     - git config user.email "exotics.diskspace.watcher@cern.ch"
     - git config user.name "ExoticsDiskspaceWatcher"
