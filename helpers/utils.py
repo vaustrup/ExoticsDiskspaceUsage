@@ -1,4 +1,4 @@
-def convert_units(size: int):
+def convert_units(size: int) -> str:
     '''
     Converts size given in kB into more adequate units
     Arguments:

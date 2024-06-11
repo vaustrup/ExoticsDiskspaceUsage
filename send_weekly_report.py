@@ -25,59 +25,60 @@ def analysis_link(analysis: str):
     link_strings = [link_string(link, str(i)) for i, link in enumerate(links, start=1)]
     return f"{sanitised_name} [{", ".join(link_strings)}]"
 
-subgroup_information = {}
-for subgroup in SUBGROUPS:
-    analysis_data = get_data_from_git_history(subgroup=subgroup, days_ago=[0, 6])
-    subgroup_information[subgroup] = analysis_data
+def main():
+    subgroup_information = {}
+    for subgroup in SUBGROUPS:
+        analysis_data = get_data_from_git_history(subgroup=subgroup, days_ago=[0, 6])
+        subgroup_information[subgroup] = analysis_data
 
-total_size = 0
-total_size_last_week = 0
-largest_total_size = 0
-total_number = 0
-total_number_last_week = 0
-most_total_number = 0
-largest = []
-largest_change = []
-largest_increase = []
-most = []
-most_change = []
-most_increase = []
+    total_size = 0
+    total_size_last_week = 0
+    largest_total_size = 0
+    total_number = 0
+    total_number_last_week = 0
+    most_total_number = 0
+    largest = []
+    largest_change = []
+    largest_increase = []
+    most = []
+    most_change = []
+    most_increase = []
 
-LAST_WEEK = (TODAY - datetime.timedelta(6)).strftime("%Y-%m-%d")
-for subgroup, subgroup_data in subgroup_information.items():
-    for analysis, analysis_data in subgroup_data.items():
-        size = analysis_data[TODAY.strftime("%Y-%m-%d")]["size"]
-        size_last_week = analysis_data[LAST_WEEK]["size"]
-        size_increase = size - size_last_week 
-        numbers = analysis_data[TODAY.strftime("%Y-%m-%d")]["number_of_files"]
-        numbers_last_week = analysis_data[LAST_WEEK]["number_of_files"]
-        numbers_increase = numbers - numbers_last_week
-        total_size += size
-        total_size_last_week += size_last_week
-        if size/MAX_DISK_SPACE>0.01: 
-            largest.append((size, subgroup, analysis))
-            largest_total_size += size
-        if size_increase > 1024*1024: # only show increases of at least 1GB
-            largest_increase.append((size_increase, subgroup, analysis, size))
-            largest_increase.sort(reverse=True, key=lambda x: x[0])
-            # only show the 10 largest increases
-            if len(largest_increase) > 10:
-                largest_increase.pop()
-        total_number += numbers
-        total_number_last_week += numbers_last_week
-        if numbers/MAX_FILE_NUMBER>0.01: 
-            most.append((numbers, subgroup, analysis))
-            most_total_number += numbers
-            if numbers_increase > 0:
-                most_increase.append((numbers_increase, subgroup, analysis, numbers))
-                most_increase.sort(reverse=True, key=lambda x: x[0])
-                if len(most_increase) > 10:
-                    most_increase.pop()
+    LAST_WEEK = (TODAY - datetime.timedelta(6)).strftime("%Y-%m-%d")
+    for subgroup, subgroup_data in subgroup_information.items():
+        for analysis, analysis_data in subgroup_data.items():
+            size = analysis_data[TODAY.strftime("%Y-%m-%d")]["size"]
+            size_last_week = analysis_data[LAST_WEEK]["size"]
+            size_increase = size - size_last_week 
+            numbers = analysis_data[TODAY.strftime("%Y-%m-%d")]["number_of_files"]
+            numbers_last_week = analysis_data[LAST_WEEK]["number_of_files"]
+            numbers_increase = numbers - numbers_last_week
+            total_size += size
+            total_size_last_week += size_last_week
+            if size/MAX_DISK_SPACE>0.01: 
+                largest.append((size, subgroup, analysis))
+                largest_total_size += size
+            if size_increase > 1024*1024: # only show increases of at least 1GB
+                largest_increase.append((size_increase, subgroup, analysis, size))
+                largest_increase.sort(reverse=True, key=lambda x: x[0])
+                # only show the 10 largest increases
+                if len(largest_increase) > 10:
+                    largest_increase.pop()
+            total_number += numbers
+            total_number_last_week += numbers_last_week
+            if numbers/MAX_FILE_NUMBER>0.01: 
+                most.append((numbers, subgroup, analysis))
+                most_total_number += numbers
+                if numbers_increase > 0:
+                    most_increase.append((numbers_increase, subgroup, analysis, numbers))
+                    most_increase.sort(reverse=True, key=lambda x: x[0])
+                    if len(most_increase) > 10:
+                        most_increase.pop()
 
-largest.sort(reverse=True, key=lambda x: x[0])
-most.sort(reverse=True, key=lambda x: x[0])
+    largest.sort(reverse=True, key=lambda x: x[0])
+    most.sort(reverse=True, key=lambda x: x[0])
 
-latex_code = f"""
+    latex_code = f"""
 \\documentclass{{article}}
 \\usepackage[left=0.8in, right=0.8in, bottom=0.8in, top=0.8in]{{geometry}}
 \\usepackage{{booktabs}}
@@ -107,11 +108,11 @@ In total, this list comprises {len(largest)} directories, accounting for {round(
 Analysis & Subgroup & Diskspace used [GB] & \\% of all used space & \\% of all space \\\\
 \\midrule
 """
-for analysis in largest:
-    latex_code += f"""
+    for analysis in largest:
+        latex_code += f"""
 {analysis_link(analysis[2])} & {analysis[1].upper()} & {int(analysis[0]/1024**2)} & {round(analysis[0]/total_size*100, 1)} & {round(analysis[0]/MAX_DISK_SPACE*100, 1)}\\\\
-"""
-latex_code += f"""
+    """
+    latex_code += f"""
 \\bottomrule
 \\end{{tabular}}
 \\end{{table}}
@@ -122,15 +123,15 @@ latex_code += f"""
 \\label{{tab:largest_increase_directories}}
 \\begin{{tabular}}{{ccccc}}
 \\toprule
-         &          &                     & \\multicolumn{{2}}{{c}}{{Increase wrt previous week}} \\\\ 
+        &          &                     & \\multicolumn{{2}}{{c}}{{Increase wrt previous week}} \\\\ 
 Analysis & Subgroup & Diskspace used [GB] & in GB & in \\% \\\\
 \\midrule
-"""
-for analysis in largest_increase:
-    latex_code += f"""
+    """
+    for analysis in largest_increase:
+        latex_code += f"""
 {analysis_link(analysis[2])} & {analysis[1].upper()} & {int(analysis[3]/1024**2)} & {int(analysis[0]/1024**2)} & {round(analysis[0]/(analysis[3]-analysis[0])*100, 1)}\\\\
-"""
-latex_code += f"""
+    """
+    latex_code += f"""
 \\bottomrule
 \\end{{tabular}}
 \\end{{table}}
@@ -145,53 +146,56 @@ The list comprises {len(most)} directories, accounting for {round(most_total_num
 \\toprule
 Analysis & Subgroup & Number of files & \\% of all files & \\% of all allowed files \\\\
 \\midrule
-"""
-for analysis in most:
-    latex_code += f"""
+    """
+    for analysis in most:
+        latex_code += f"""
 {analysis_link(analysis[2])} & {analysis[1].upper()} & {analysis[0]} & {round(analysis[0]/total_number*100, 1)} & {round(analysis[0]/MAX_FILE_NUMBER*100, 1)}\\\\
-"""
-latex_code += """
+    """
+    latex_code += """
 \\bottomrule
 \\end{tabular}
 \\end{table}
-"""
-latex_code += f"""
+    """
+    latex_code += f"""
 \\begin{{table}}[h]
 \\centering
 \\caption{{Analysis directories with the largest increases in numbers of files stored. Links in brackets behind the directory names lead to the respective analysis Glance pages.}}
 \\label{{tab:most_increase_directories}}
 \\begin{{tabular}}{{ccccc}}
 \\toprule
-         &          &                 & \\multicolumn{{2}}{{c}}{{Increase wrt previous week}} \\\\          
+        &          &                 & \\multicolumn{{2}}{{c}}{{Increase wrt previous week}} \\\\          
 Analysis & Subgroup & Number of files & absolute & in \\% \\\\
 \\midrule
-"""
-for analysis in most_increase:
-    latex_code += f"""
+    """
+    for analysis in most_increase:
+        latex_code += f"""
 {analysis_link(analysis[2])} & {analysis[1].upper()} & {analysis[3]} & {analysis[0]} & {round(analysis[0]/(analysis[3]-analysis[0])*100, 1)}\\\\
-"""
-latex_code += """
+    """
+    latex_code += """
 \\bottomrule
 \\end{tabular}
 \\end{table}
 \\end{document}
-"""
-with open("latex.tex", "w") as f:
-    f.write(latex_code)
+    """
+    with open("latex.tex", "w") as f:
+        f.write(latex_code)
 
-subprocess.run(["pdflatex", "latex.tex"])
+    subprocess.run(["pdflatex", "latex.tex"])
 
 
-msg = EmailMessage()
-msg.set_content("Hello World")
-msg["To"] = "volker.andreas.austrup@cern.ch"
-msg["From"] = "exotics.diskspace.watcher@cern.ch"
-msg["Subject"] = "Weekly Exotics Diskspace Report"
+    msg = EmailMessage()
+    msg.set_content("Hello World")
+    msg["To"] = "volker.andreas.austrup@cern.ch"
+    msg["From"] = "exotics.diskspace.watcher@cern.ch"
+    msg["Subject"] = "Weekly Exotics Diskspace Report"
 
-log.info(f"Sending weekly report to {msg['To']}.")
+    log.info(f"Sending weekly report to {msg['To']}.")
 
-# this only works from within the CERN network
-# see https://mailservices.docs.cern.ch/Miscellaneous/Anonymous_smtp/
-s = smtplib.SMTP(host='cernmx.cern.ch', port=25)
-s.send_message(msg)
-s.quit()
+    # this only works from within the CERN network
+    # see https://mailservices.docs.cern.ch/Miscellaneous/Anonymous_smtp/
+    s = smtplib.SMTP(host='cernmx.cern.ch', port=25)
+    s.send_message(msg)
+    s.quit()
+
+if __name__ == "__main__":
+    main()

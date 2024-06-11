@@ -1,12 +1,14 @@
 import os
 
 import gitlab
+from gitlab.v4.objects import Project
+from gitlab.base import RESTObject
 
 from helpers.constants import GITLAB_USER_ID
 from helpers.logger import log
 
 
-def get_issue(project, title="", description=""):
+def get_issue(project: Project, title: str="", description: str="") -> RESTObject:
     """
     Retrieve an already open issue, or create a new one if no open issue is found
     Arguments:
@@ -26,7 +28,7 @@ def get_issue(project, title="", description=""):
     issue = project.issues.create({"title": title, "description": description})
     return issue
 
-def get_project():
+def get_project() -> Project:
     """
     Retrieve Gitlab project instance using the private ACCESS_TOKEN stored in the project's CI/CD variables
     """
