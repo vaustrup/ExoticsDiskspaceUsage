@@ -38,7 +38,8 @@ class EOSAnalyser:
         analysis_names = [folder for folder in os.listdir(directory) if os.path.isdir(os.path.join(directory, folder))]
         sizes = []
         numbers = []
-        for analysis in analysis_names:
+        log.info(f"Found {len(analysis_names)} analyses in subgroup {subgroup}.")
+        for i_analysis, analysis in enumerate(analysis_names):
             number_of_files = 0
             size = 0
             for dirpath, _, filenames in os.walk(f"{self._directory}/{subgroup}/{analysis}"):
@@ -49,9 +50,12 @@ class EOSAnalyser:
                         size += os.path.getsize(filepath)
             numbers.append(number_of_files)
             sizes.append(size)
+            if (i_analysis+1)%10==10:
+                log.info(f"Checked {i_analysis+1}/{len(analysis_names)} analyses.")
 
         total_size = sum(sizes)
         total_numbers = sum(numbers)
+        log.info(f"Finished checking subgroup {subgroup}.")
         with open(f'reports/{subgroup}.csv', 'w') as f:
             writer = csv.writer(f, delimiter=',')
             writer.writerow(["Analysis Team", "Disk Usage in GB", "Number of files", "Glance code"])
