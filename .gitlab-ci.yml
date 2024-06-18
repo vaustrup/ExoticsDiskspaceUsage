@@ -126,7 +126,7 @@ email:
   before_script:
     - apt update
     - apt install -y git
-    - apt install -y texlive-latex-base
+    - apt install -y texlive-latex-base texlive-latex-extra
   script:
     - python3 send_weekly_report.py
   artifacts:
