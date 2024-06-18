@@ -91,7 +91,7 @@ plot:
   image: python:3.12.0b2-slim-buster
   before_script:
     - apt update
-    - apt install git
+    - apt install -y git
     - pip3 install --upgrade pip
     - pip3 install matplotlib
   script:
@@ -125,7 +125,7 @@ email:
   image: python:3.12.0b2-slim-buster
   before_script:
     - apt update
-    - apt install git
+    - apt install -y git
   script:
     - python3 send_weekly_report.py
   artifacts:
