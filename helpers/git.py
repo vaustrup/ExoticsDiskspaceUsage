@@ -23,8 +23,9 @@ def get_data_from_git_history(subgroup: str, days_ago: list[int]):
         before_date = (TODAY - datetime.timedelta(i_day-1)).strftime("%Y-%m-%d")
         command = f'git show $(git rev-list -1 --before="{before_date}" HEAD):reports/{subgroup}.csv'
         result = subprocess.run(command, shell=True, capture_output=True, text=True)
-        print(result.stderr)
-        print(result.stdout)
+        if result.stderr:
+            raise RuntimeError(f"{result.stderr}")
+
         analyses = [x for x in result.stdout.split("\n") if x!='']
         isInGB = False
         for analysis in analyses:
