@@ -193,7 +193,7 @@ Analysis & Subgroup & Number of files & absolute & in \\% \\\\
     msg["To"] = "volker.andreas.austrup@cern.ch"
     msg["From"] = "exotics.diskspace.watcher@cern.ch"
     msg["Subject"] = "Weekly Exotics Diskspace Report"
-    with open("latex.pdf") as f:
+    with open("latex.pdf", "rb") as f:
         attachment = f.read()
         msg.add_attachment(attachment, maintype='application', subtype='pdf', filename='latex.pdf')
 
