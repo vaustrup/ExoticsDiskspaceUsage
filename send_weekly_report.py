@@ -189,10 +189,13 @@ Analysis & Subgroup & Number of files & absolute & in \\% \\\\
 
 
     msg = EmailMessage()
-    msg.set_content("Hello World")
+    msg.set_content("This is the weekly report on the usage of the Exotics Disk Space. Please see the attachment for details.")
     msg["To"] = "volker.andreas.austrup@cern.ch"
     msg["From"] = "exotics.diskspace.watcher@cern.ch"
     msg["Subject"] = "Weekly Exotics Diskspace Report"
+    with open("latex.pdf") as f:
+        attachment = f.read()
+        msg.add_attachment(attachment, maintype='application', subtype='pdf', filename='latex.pdf')
 
     log.info(f"Sending weekly report to {msg['To']}.")
 
