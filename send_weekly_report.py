@@ -56,6 +56,8 @@ def main():
             numbers_increase = numbers - numbers_last_week
             total_size += size
             total_size_last_week += size_last_week
+            print(analysis)
+            print(analysis_data)
             if size/MAX_DISK_SPACE>0.01: 
                 largest.append((size, subgroup, analysis))
                 largest_total_size += size
@@ -129,7 +131,6 @@ Analysis & Subgroup & Diskspace used [GB] & in GB & in \\% \\\\
 \\midrule
     """
     for analysis in largest_increase:
-        print(analysis)
         latex_code += f"""
 {analysis_link(analysis[2])} & {analysis[1].upper()} & {int(analysis[3]/1024**2)} & {int(analysis[0]/1024**2)} & {"$\\infty$" if analysis[3]==analysis[0] else round(analysis[0]/(analysis[3]-analysis[0])*100, 1)}\\\\
     """
