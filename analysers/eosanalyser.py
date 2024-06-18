@@ -39,10 +39,13 @@ class EOSAnalyser:
         sizes = []
         numbers = []
         log.info(f"Found {len(analysis_names)} analyses in subgroup {subgroup}.")
+        number_of_dirs = 0
         for i_analysis, analysis in enumerate(analysis_names):
             number_of_files = 0
             size = 0
+            number_of_dirs += 1
             for dirpath, _, filenames in os.walk(f"{self._directory}/{subgroup}/{analysis}"):
+                number_of_dirs += 1
                 number_of_files += len(filenames)
                 for filename in filenames:
                     filepath = os.path.join(dirpath, filename)
@@ -52,7 +55,7 @@ class EOSAnalyser:
             sizes.append(size)
             if (i_analysis+1)%10==10:
                 log.info(f"Checked {i_analysis+1}/{len(analysis_names)} analyses.")
-
+        print(number_of_dirs)
         total_size = sum(sizes)
         total_numbers = sum(numbers)
         log.info(f"Finished checking subgroup {subgroup}.")
