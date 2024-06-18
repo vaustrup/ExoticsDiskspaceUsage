@@ -47,11 +47,12 @@ def main():
     LAST_WEEK = (TODAY - datetime.timedelta(6)).strftime("%Y-%m-%d")
     for subgroup, subgroup_data in subgroup_information.items():
         for analysis, analysis_data in subgroup_data.items():
+            available_last_week = LAST_WEEK in analysis_data
             size = analysis_data[TODAY.strftime("%Y-%m-%d")]["size"]
-            size_last_week = analysis_data[LAST_WEEK]["size"]
+            size_last_week = 0 if not available_last_week else analysis_data[LAST_WEEK]["size"]
             size_increase = size - size_last_week 
             numbers = analysis_data[TODAY.strftime("%Y-%m-%d")]["number_of_files"]
-            numbers_last_week = analysis_data[LAST_WEEK]["number_of_files"]
+            numbers_last_week = 0 if not available_last_week else analysis_data[LAST_WEEK]["number_of_files"]
             numbers_increase = numbers - numbers_last_week
             total_size += size
             total_size_last_week += size_last_week
@@ -128,8 +129,9 @@ Analysis & Subgroup & Diskspace used [GB] & in GB & in \\% \\\\
 \\midrule
     """
     for analysis in largest_increase:
+        print(analysis)
         latex_code += f"""
-{analysis_link(analysis[2])} & {analysis[1].upper()} & {int(analysis[3]/1024**2)} & {int(analysis[0]/1024**2)} & {round(analysis[0]/(analysis[3]-analysis[0])*100, 1)}\\\\
+{analysis_link(analysis[2])} & {analysis[1].upper()} & {int(analysis[3]/1024**2)} & {int(analysis[0]/1024**2)} & {"$\\infty$" if analysis[3]==analysis[0] else round(analysis[0]/(analysis[3]-analysis[0])*100, 1)}\\\\
     """
     latex_code += f"""
 \\bottomrule
@@ -169,7 +171,7 @@ Analysis & Subgroup & Number of files & absolute & in \\% \\\\
     """
     for analysis in most_increase:
         latex_code += f"""
-{analysis_link(analysis[2])} & {analysis[1].upper()} & {analysis[3]} & {analysis[0]} & {round(analysis[0]/(analysis[3]-analysis[0])*100, 1)}\\\\
+{analysis_link(analysis[2])} & {analysis[1].upper()} & {analysis[3]} & {analysis[0]} & {"$\\infty$" if analysis[3]==analysis[0] else round(analysis[0]/(analysis[3]-analysis[0])*100, 1)}\\\\
     """
     latex_code += """
 \\bottomrule
@@ -180,6 +182,9 @@ Analysis & Subgroup & Number of files & absolute & in \\% \\\\
     with open("latex.tex", "w") as f:
         f.write(latex_code)
 
+    # run latex three times to make sure references are properly set
+    subprocess.run(["pdflatex", "latex.tex"])
+    subprocess.run(["pdflatex", "latex.tex"])
     subprocess.run(["pdflatex", "latex.tex"])
 
 
