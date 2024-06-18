@@ -56,8 +56,8 @@ def main():
             numbers_increase = numbers - numbers_last_week
             total_size += size
             total_size_last_week += size_last_week
-            print(analysis)
-            print(analysis_data)
+            log.info(analysis)
+            log.info(analysis_data)
             if size/MAX_DISK_SPACE>0.01: 
                 largest.append((size, subgroup, analysis))
                 largest_total_size += size
