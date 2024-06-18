@@ -30,6 +30,7 @@ def main():
     for subgroup in SUBGROUPS:
         analysis_data = get_data_from_git_history(subgroup=subgroup, days_ago=[0, 6])
         subgroup_information[subgroup] = analysis_data
+        print(analysis_data)
 
     total_size = 0
     total_size_last_week = 0
@@ -56,8 +57,6 @@ def main():
             numbers_increase = numbers - numbers_last_week
             total_size += size
             total_size_last_week += size_last_week
-            log.info(analysis)
-            log.info(analysis_data)
             if size/MAX_DISK_SPACE>0.01: 
                 largest.append((size, subgroup, analysis))
                 largest_total_size += size
