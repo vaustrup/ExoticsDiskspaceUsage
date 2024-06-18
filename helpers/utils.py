@@ -13,4 +13,4 @@ def convert_units(size: int) -> str:
     while x/CONVERSION_FACTOR > 1 and i_unit < len(UNITS):
         x = x/CONVERSION_FACTOR
         i_unit += 1
-    return f'{round(x/3)*3} {UNITS[i_unit]}'
+    return f'{x:.3g} {UNITS[i_unit]}'
