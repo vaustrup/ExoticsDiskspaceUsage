@@ -1,11 +1,11 @@
 | * Analysis Team * | * Disk Usage in GB * | * Number of files * | * Glance code * |
 | ANA-EXOT-2023-18 | 551.13 | 412 | ANA-EXOT-2023-18 |
 | ANA-EXOT-2023-19_allhadMET | 466.45 | 605 | ANA-EXOT-2023-19 |
-| ANA-EXOT-2023-25_mono-b-c | 2592.8 | 1546 | ANA-EXOT-2023-25 |
+| ANA-EXOT-2023-25_mono-b-c | 2594 | 1847 | ANA-EXOT-2023-25 |
 | ANA-EXOT-2024-01_dibjetISR | 768.88 | 447 | ANA-EXOT-2024-01 |
 | LeptonPlusJet | 1880.6 | 65 | ANA-EXOT-2021-30/ANA-EXOT-2022-35 |
 | MultiBJet | 197.24 | 129 | ANA-EXOT-2018-09 |
-| SC_NCBH_NMDS | 1021.1 | 180851 | ANA-EXOT-2022-21 |
+| SC_NCBH_NMDS | 1021.6 | 181178 | ANA-EXOT-2022-21 |
 | dibjet | 708.07 | 2791 | ANA-EXOT-2019-03 |
 | dijet | 7712.8 | 73967 | ANA-EXOT-2019-03 |
 | dijetISR | 7317.9 | 8130 | ANA-EXOT-2019-01 |
@@ -18,5 +18,5 @@
 | svjets | 1601.6 | 32875 | ANA-EXOT-2022-37 |
 | svjets-schannel | 915.66 | 5964 | ANA-EXOT-2021-19 |
 | vbfinv | 29.397 | 4649 | ANA-EXOT-2022-36 |
-| Total Sum | 41709 | 895140 |  |
+| Total Sum | 41711 | 895768 |  |
 <!-- This file was created automatically from reports/jdm.csv. Do not edit it manually. -->
