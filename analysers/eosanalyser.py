@@ -1,7 +1,7 @@
 import csv
 import os
 
-from helpers.constants import GLANCE_CODES
+from helpers.constants import get_glance_codes
 from helpers.logger import log
 
 class EOSAnalyser:
@@ -19,11 +19,12 @@ class EOSAnalyser:
         Return:
             Glance reference code as string, empty string if analysis name is not in 'glance_codes.csv'
         '''
-        if name not in GLANCE_CODES.keys():
+        glance_codes = get_glance_codes()
+        if name not in glance_codes.keys():
             log.warning(f"Could not find Glance reference code for analysis {name}.")
             self._analyses_without_glance.append(name)
             return ""
-        return GLANCE_CODES[name].replace(",","/")
+        return glance_codes[name].replace(",","/")
 
     def check_subgroup(self, subgroup: str) -> None:
         '''
