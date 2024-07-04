@@ -51,7 +51,11 @@ class EOSAnalyser:
                 for filename in filenames:
                     filepath = os.path.join(dirpath, filename)
                     if os.path.isfile(filepath):
-                        size += os.path.getsize(filepath)
+                        # make sure to treat symbolic links correctly
+                        if os.path.islink(filepath):
+                            size += os.lstat(filepath).st_size
+                        else:
+                            size += os.path.getsize(filepath)
             numbers.append(number_of_files)
             sizes.append(size)
             if (i_analysis+1)%10==10:
