@@ -2,12 +2,12 @@
 | ANA-EXOT-2023-18 | 551.13 | 412 | ANA-EXOT-2023-18 |
 | ANA-EXOT-2023-19_allhadMET | 471.86 | 606 | ANA-EXOT-2023-19 |
 | ANA-EXOT-2023-25_mono-b-c | 2593.6 | 1847 | ANA-EXOT-2023-25 |
-| ANA-EXOT-2024-01_dibjetISR | 971.91 | 633 | ANA-EXOT-2024-01 |
+| ANA-EXOT-2024-01_dibjetISR | 977.87 | 573 | ANA-EXOT-2024-01 |
 | LeptonPlusJet | 1880.5 | 65 | ANA-EXOT-2021-30/ANA-EXOT-2022-35 |
 | MultiBJet | 197.24 | 129 | ANA-EXOT-2018-09 |
 | SC_NCBH_NMDS | 1126.6 | 181352 | ANA-EXOT-2022-21 |
 | dibjet | 708.07 | 2791 | ANA-EXOT-2019-03 |
-| dijet | 7581.5 | 73967 | ANA-EXOT-2019-03 |
+| dijet | 7582.2 | 107064 | ANA-EXOT-2019-03 |
 | dijetISR | 1542.6 | 8130 | ANA-EXOT-2019-01 |
 | lepdijet | 2069.9 | 60552 | ANA-EXOT-2018-32/ANA-EXOT-2020-15/ANA-EXOT-2022-07 |
 | monoHiggs | 213.89 | 11660 | ANA-EXOT-2021-08 |
@@ -18,5 +18,5 @@
 | svjets | 1601.6 | 32875 | ANA-EXOT-2022-37 |
 | svjets-schannel | 915.66 | 5964 | ANA-EXOT-2021-19 |
 | vbfinv | 29.397 | 4649 | ANA-EXOT-2022-36 |
-| Total Sum | 36059 | 896173 |  |
+| Total Sum | 36065 | 929210 |  |
 <!-- This file was created automatically from reports/jdm.csv. Do not edit it manually. -->
