@@ -1,4 +1,5 @@
 import datetime
+from functools import lru_cache
 import os
 import smtplib
 import subprocess
@@ -27,6 +28,27 @@ def analysis_link(analysis: str):
     link_strings = [link_string(link, str(i)) for i, link in enumerate(links, start=1)]
     return f"{sanitised_name} [{", ".join(link_strings)}]"
 
+@lru_cache
+def get_finished_analyses():
+    analyses = []
+    with open("finished_analyses.txt", "r") as f:
+        for line in f:
+            analyses.append(line.rstrip())
+    return analyses 
+
+def analysis_finished(analysis: str):
+    xmark = "x"
+    checkmark = "\\checkmark"
+    glance_code_list = get_glance_codes()
+    if analysis not in glance_code_list.keys():
+        return xmark
+    glance_codes = glance_code_list[analysis].split(",")
+    finished_analyses = get_finished_analyses()
+    for glance_code in glance_codes:
+        if glance_code not in finished_analyses:
+            return xmark
+    return checkmark
+
 def main():
     subgroup_information = {}
     for subgroup in SUBGROUPS:
@@ -36,9 +58,11 @@ def main():
 
     total_size = 0
     total_size_last_week = 0
+    total_size_finished = 0
     largest_total_size = 0
     total_number = 0
     total_number_last_week = 0
+    total_number_finished = 0
     most_total_number = 0
     largest = []
     largest_change = []
@@ -70,6 +94,9 @@ def main():
                     largest_increase.pop()
             total_number += numbers
             total_number_last_week += numbers_last_week
+            if analysis_finished(analysis) == "\\checkmark":
+                total_number_finished += numbers
+                total_size_finished += size
             if numbers/MAX_FILE_NUMBER>0.01: 
                 most.append((numbers, subgroup, analysis))
                 most_total_number += numbers
@@ -89,6 +116,7 @@ def main():
 \\usepackage[colorlinks=true, linkcolor=blue, urlcolor=blue]{{hyperref}}
 \\usepackage{{placeins}}
 \\usepackage{{cleveref}}
+\\usepackage{{amssymb}}
 \\begin{{document}}
 \\begin{{center}}
 \\Huge\\bfseries Exotics Diskspace Usage \\\\
@@ -97,7 +125,7 @@ def main():
 \\end{{center}}
 This document is automically created once a week by the {link_string(f'https://{os.getenv("CI_SERVER_HOST")}/{os.getenv("CI_PROJECT_PATH")}', "ExoticsDiskspaceUsage monitoring tools")}.
 It is meant to give a comprehensive overview of the status of the Exotics diskspace and any changes that have occurred during the previous week.
-The current total diskspace used is {convert_units(total_size)}, {round(total_size/MAX_DISK_SPACE*100, 1)}\\% of the {convert_units(MAX_DISK_SPACE)} available to the Exotics group, an {"increase" if total_size>total_size_last_week else "decrease"} of {round(abs(1-total_size/total_size_last_week)*100, 1)}\\% compared to the previous week.
+The current total diskspace used is {convert_units(total_size)}, {round(total_size/MAX_DISK_SPACE*100, 1)}\\% of the {convert_units(MAX_DISK_SPACE)} available to the Exotics group, an {"increase" if total_size>total_size_last_week else "decrease"} of {round(abs(1-total_size/total_size_last_week)*100, 1)}\\% compared to the previous week. {round(total_size_finished/total_size*100, 1)}\\% of the used space belongs to analyses with their paper accepted by the journal.
 A total of {total_number} files is stored in the Exotics diskspace, amounting to {round(total_number/MAX_FILE_NUMBER*100, 1)}\\% of the maximum {MAX_FILE_NUMBER} allowed, an {"increase" if total_number>total_number_last_week else "decrease"} of {round(abs(1-total_number/total_number_last_week)*100, 1)}\\% compared to the previous week.
 More detailed numbers, automatically updated daily, can be found in the {link_string('https://twiki.cern.ch/twiki/bin/viewauth/Sandbox/VolkerAndreasAustrupSandbox', 'Exotics Diskspace TWiki page')}.\\\\
 \\\\
@@ -107,14 +135,15 @@ In total, this list comprises {len(largest)} directories, accounting for {round(
 \\centering
 \\caption{{Analysis directories using more than 1\\% of the available diskspace. Links in brackets behind the directory names lead to the respective analysis Glance pages.}}
 \\label{{tab:largest_directories}}
-\\begin{{tabular}}{{ccccc}}
+\\begin{{tabular}}{{cccccc}}
 \\toprule
-Analysis & Subgroup & Diskspace used [GB] & \\% of all used space & \\% of all space \\\\
+         &          &          &                     & \\multicolumn{{2}}{{c}}{{\\% of all}} \\\\ 
+Analysis & Finished & Subgroup & Diskspace used [GB] & used space & space \\\\
 \\midrule
 """
     for analysis in largest:
         latex_code += f"""
-{analysis_link(analysis[2])} & {analysis[1].upper()} & {int(analysis[0]/1024**2)} & {round(analysis[0]/total_size*100, 1)} & {round(analysis[0]/MAX_DISK_SPACE*100, 1)}\\\\
+{analysis_link(analysis[2])} & {analysis_finished(analysis[2])} & {analysis[1].upper()} & {int(analysis[0]/1024**2)} & {round(analysis[0]/total_size*100, 1)} & {round(analysis[0]/MAX_DISK_SPACE*100, 1)}\\\\
     """
     latex_code += f"""
 \\bottomrule
@@ -146,14 +175,14 @@ The list comprises {len(most)} directories, accounting for {round(most_total_num
 \\centering
 \\caption{{Analysis directories containing more than 1\\% of the maximum allowed number of files. Links in brackets behind the directory names lead to the respective analysis Glance pages.}}
 \\label{{tab:most_directories}}
-\\begin{{tabular}}{{ccccc}}
+\\begin{{tabular}}{{cccccc}}
 \\toprule
-Analysis & Subgroup & Number of files & \\% of all files & \\% of all allowed files \\\\
+Analysis & Finished & Subgroup & Number of files & \\% of all files & \\% of all allowed files \\\\
 \\midrule
     """
     for analysis in most:
         latex_code += f"""
-{analysis_link(analysis[2])} & {analysis[1].upper()} & {analysis[0]} & {round(analysis[0]/total_number*100, 1)} & {round(analysis[0]/MAX_FILE_NUMBER*100, 1)}\\\\
+{analysis_link(analysis[2])} & {analysis_finished(analysis[2])} & {analysis[1].upper()} & {analysis[0]} & {round(analysis[0]/total_number*100, 1)} & {round(analysis[0]/MAX_FILE_NUMBER*100, 1)}\\\\
     """
     latex_code += """
 \\bottomrule
