@@ -55,7 +55,7 @@ eos:
     - python3 helpers/csv_to_twiki.py --file reports/$SUBGROUP.csv --delimiter , --highlight-header
   parallel:
     matrix:
-      - SUBGROUP: [cdm, hqt, jdm, lpx, ueh]
+      - SUBGROUP: [ccs, cdm, hqt, jdm, jmx, lpx, lup, ueh]
   artifacts:
     paths:
       - ./reports/$SUBGROUP.csv
