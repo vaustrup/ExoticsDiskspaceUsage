@@ -1,6 +1,6 @@
 stages:
   - report
-  - plot
+  - process
   - commit
   - test
   - email
@@ -75,7 +75,7 @@ eos_test:
     - if: $CI_PIPELINE_SOURCE == "merge_request_event"
 
 csv_to_twiki:
-  stage: report
+  stage: process
   image: python:3.12.0b2-slim-buster
   script:
     - python3 helpers/csv_to_twiki.py --file lookup_table.csv
@@ -87,7 +87,7 @@ csv_to_twiki:
     - if: $CI_PIPELINE_SOURCE == "schedule" && $CI_PIPELINE_TIMING == "daily"
 
 plot:
-  stage: plot
+  stage: process
   image: python:3.12.0b2-slim-buster
   before_script:
     - apt update
