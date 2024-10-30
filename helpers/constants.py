@@ -2,7 +2,7 @@ import csv
 import datetime
 
 TODAY = datetime.datetime.now()
-SUBGROUPS = ["cdm", "hqt", "jdm", "lpx", "ueh"]
+SUBGROUPS = ["ccs", "cdm", "hqt", "jdm", "jmx", "lpx", "lup", "ueh"]
 
 GITLAB_USER_ID = 6032
 
