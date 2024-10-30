@@ -74,7 +74,7 @@ csv_to_twiki_grid:
   stage: process
   image: python:3.12.0b2-slim-buster
   script:
-    - python3 helpers/csv_to_twiki.py --file $DISK.csv --delimiter , --highlight-header
+    - python3 helpers/csv_to_twiki.py --file reports/$DISK.csv --delimiter , --highlight-header
   parallel:
     matrix:
       - DISK: [CERN-PROD_PHYS-EXOTICS, TOKYO-LCG2_PHYS-EXOTICS]
@@ -89,7 +89,7 @@ csv_to_twiki_subgroup:
   stage: process
   image: python:3.12.0b2-slim-buster
   script:
-    - python3 helpers/csv_to_twiki.py --file $SUBGROUP.csv --delimiter , --highlight-header
+    - python3 helpers/csv_to_twiki.py --file reports/$SUBGROUP.csv --delimiter , --highlight-header
   parallel:
     matrix:
       - SUBGROUP: [ccs, cdm, hqt, jdm, jmx, lpx, lup, ueh]
