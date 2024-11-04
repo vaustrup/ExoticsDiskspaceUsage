@@ -2,7 +2,7 @@
 | ANA-EXOT-2021-02_singleVLQcombination | 0.47119 | 805 | ANA-EXOT-2021-02 |
 | ANA-EXOT-2022-44_multitop | 1521.7 | 6532 | ANA-EXOT-2022-44 |
 | DarkMesons | 1182.7 | 75848 | ANA-EXOT-2019-17/ANA-EXOT-2023-09 |
-| OSML | 2583.4 | 20030 | ANA-EXOT-2018-58/ANA-EXOT-2020-01 |
+| OSML | 2584 | 20031 | ANA-EXOT-2018-58/ANA-EXOT-2020-01 |
 | WbX | 225.92 | 75429 | ANA-EXOT-2019-06 |
 | WqX | 3114.5 | 5797 | ANA-EXOT-2021-35 |
 | WtMet | 1623.6 | 39193 | ANA-EXOT-2018-43 |
@@ -14,5 +14,5 @@
 | ttbarres_DM | 255.75 | 45957 | ANA-EXOT-2018-48 |
 | ttreshad_2018 | 582.23 | 26442 | ANA-EXOT-2018-48 |
 | twmetboosted | 661.53 | 117529 | ANA-EXOT-2021-01 |
-| Total Sum | 19143 | 618161 |  |
+| Total Sum | 19144 | 618162 |  |
 <!-- This file was created automatically from reports/hqt.csv. Do not edit it manually. -->
