@@ -1,5 +1,5 @@
 | * Analysis Team * | * Disk Usage in GB * | * Number of files * | * Glance code * |
-| ANA-EXOT-2018-20_EJRun2 | 249.7 | 2692 | ANA-EXOT-2018-20 |
+| ANA-EXOT-2018-20_EJRun2 | 676.9 | 16751 | ANA-EXOT-2018-20 |
 | ANA-EXOT-2022-12_dHNL | 286.29 | 9937 | ANA-EXOT-2022-12 |
 | ANA-EXOT-2022-31_EJRun3 | 2675.8 | 7253 | ANA-EXOT-2022-31 |
 | ANA-EXOT-2023-04_A3LP | 4543.4 | 3028 | ANA-EXOT-2023-04 |
@@ -7,10 +7,10 @@
 | ANA-EXOT-2023-31_dLJ | 397.02 | 2043 | ANA-EXOT-2023-31 |
 | ANA-EXOT-2024-07_VLLDarkPhoton | 267.43 | 1817 | ANA-EXOT-2024-07 |
 | ANA-EXOT-2024-17_DJRun3 | 1165.3 | 1189 | ANA-EXOT-2024-17 |
-| ANA-EXOT-2024-18_lowmassDimuDV | 825.25 | 670 | ANA-EXOT-2024-18 |
-| HIP | 482.08 | 1362 | ANA-EXOT-2019-33 |
+| ANA-EXOT-2024-18_lowmassDimuDV | 834.49 | 672 | ANA-EXOT-2024-18 |
+| HIP | 254.06 | 1344 | ANA-EXOT-2019-33 |
 | HNL | 122.81 | 2020 | ANA-EXOT-2019-29 |
 | SUEP | 300.37 | 145180 | ANA-EXOT-2018-56 |
 | VH4b | 6.076 | 1073 | ANA-EXOT-2021-32 |
-| Total Sum | 12890 | 179923 |  |
+| Total Sum | 13099 | 193966 |  |
 <!-- This file was created automatically from reports/ueh.csv. Do not edit it manually. -->
