@@ -1,4 +1,5 @@
 | * Analysis Team * | * Disk Usage in GB * | * Number of files * | * Glance code * |
-| run2-workspaces | 54.727 | 33842 |  |
-| Total Sum | 54.727 | 33842 |  |
+| run2-workspaces | 54.727 | 33848 |  |
+| summary-plots | 2.8994e-05 | 5 |  |
+| Total Sum | 54.727 | 33853 |  |
 <!-- This file was created automatically from reports/ccs.csv. Do not edit it manually. -->
