@@ -1,7 +1,7 @@
 | * Analysis Team * | * Disk Usage in GB * | * Number of files * | * Glance code * |
 | ANA-EXOT-2019-35_HNL | 2257.4 | 37593 | ANA-EXOT-2019-35 |
 | ANA-EXOT-2021-31_VLLe_mu | 36784 | 13733 | ANA-EXOT-2021-31 |
-| ANA-EXOT-2022-34_TauPlusX | 4805 | 3777 | ANA-EXOT-2022-34 |
+| ANA-EXOT-2022-34_TauPlusX | 5734.8 | 4447 | ANA-EXOT-2022-34 |
 | ANA-EXOT-2023-24_2HDM_VLL | 1336.8 | 794 | ANA-EXOT-2023-24 |
 | ANA-EXOT-2023-28_leptonsplusmet | 43.014 | 1773 | ANA-EXOT-2023-28 |
 | FourLepGeneral | 5797.2 | 8557 | ANA-EXOT-2021-34 |
@@ -11,5 +11,5 @@
 | ZprimePlusX | 2409.5 | 41897 | ANA-EXOT-2020-10 |
 | wptaunu | 132.13 | 854 | ANA-EXOT-2018-37 |
 | wptaunu2018 | 20.613 | 25 | ANA-EXOT-2018-37 |
-| Total Sum | 61924 | 146136 |  |
+| Total Sum | 62854 | 146806 |  |
 <!-- This file was created automatically from reports/lpx.csv. Do not edit it manually. -->
