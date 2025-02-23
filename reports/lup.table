@@ -1,9 +1,9 @@
 | * Analysis Team * | * Disk Usage in GB * | * Number of files * | * Glance code * |
 | ANA-EXOT-2024-14_dEdx | 65.395 | 72 |  |
 | ANA-EXOT-2024-19_multicharged | 135.5 | 2330 | ANA-EXOT-2024-19 |
-| ANA-EXOT-2024-21_DVMu | 744.77 | 22272 | ANA-EXOT-2024-21 |
+| ANA-EXOT-2024-21_DVMu | 744.77 | 22412 | ANA-EXOT-2024-21 |
 | ANA-EXOT-2024-22_DelayedJets | 136.5 | 8982 | ANA-EXOT-2024-22 |
 | ANA-EXOT-2024-23_CalRatio-top | 0.026285 | 2 | ANA-EXOT-2024-23 |
 | ANA-EXOT-2024-26_dEdxtracklets | 105.08 | 133 | ANA-EXOT-2024-26 |
-| Total Sum | 1187.3 | 33791 |  |
+| Total Sum | 1187.3 | 33931 |  |
 <!-- This file was created automatically from reports/lup.csv. Do not edit it manually. -->
