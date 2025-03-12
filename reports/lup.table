@@ -1,9 +1,10 @@
 | * Analysis Team * | * Disk Usage in GB * | * Number of files * | * Glance code * |
+| ANA-EXOT-2020-03_DisplacedTaus | 0 | 0 |  |
 | ANA-EXOT-2024-14_dEdx | 66.449 | 136 |  |
 | ANA-EXOT-2024-19_multicharged | 168.32 | 5258 | ANA-EXOT-2024-19 |
 | ANA-EXOT-2024-21_DVMu | 767.42 | 22415 | ANA-EXOT-2024-21 |
-| ANA-EXOT-2024-22_DelayedJets | 158.88 | 9332 | ANA-EXOT-2024-22 |
+| ANA-EXOT-2024-22_DelayedJets | 207.7 | 9345 | ANA-EXOT-2024-22 |
 | ANA-EXOT-2024-23_CalRatio-top | 0.026285 | 2 | ANA-EXOT-2024-23 |
-| ANA-EXOT-2024-26_dEdxtracklets | 109.21 | 222 | ANA-EXOT-2024-26 |
-| Total Sum | 1270.3 | 37365 |  |
+| ANA-EXOT-2024-26_dEdxtracklets | 109.21 | 224 | ANA-EXOT-2024-26 |
+| Total Sum | 1319.1 | 37380 |  |
 <!-- This file was created automatically from reports/lup.csv. Do not edit it manually. -->
