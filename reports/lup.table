@@ -2,11 +2,12 @@
 | ANA-EXOT-2020-03_DisplacedTaus | 1379 | 1444 |  |
 | ANA-EXOT-2023-30_SUEP | 0 | 0 |  |
 | ANA-EXOT-2024-14_dEdx | 66.449 | 136 |  |
+| ANA-EXOT-2024-14_dEdx_backup | 66.449 | 136 |  |
 | ANA-EXOT-2024-19_multicharged | 264.25 | 5986 | ANA-EXOT-2024-19 |
 | ANA-EXOT-2024-21_DVMu | 963.59 | 50835 | ANA-EXOT-2024-21 |
-| ANA-EXOT-2024-22_DelayedJets | 375.96 | 9486 | ANA-EXOT-2024-22 |
+| ANA-EXOT-2024-22_DelayedJets | 436.08 | 9558 | ANA-EXOT-2024-22 |
 | ANA-EXOT-2024-23_CalRatio-top | 0.026285 | 2 | ANA-EXOT-2024-23 |
 | ANA-EXOT-2024-26_dEdxtracklets | 109.21 | 224 | ANA-EXOT-2024-26 |
 | ANA-EXOT-2025-03_MuSAVertex | 333.01 | 773 |  |
-| Total Sum | 3491.5 | 68886 |  |
+| Total Sum | 3618.1 | 69094 |  |
 <!-- This file was created automatically from reports/lup.csv. Do not edit it manually. -->
