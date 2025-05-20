@@ -6,6 +6,8 @@ Separate scripts are used to monitor the two storage resources:
 - [eos.py](eos.py) for everything related to `/eos/atlas/atlascerngroupdisk/phys-exotics`
 - [gridspace.py](gridspace.py) for everything related to storage on `CERN-PROD_PHYS-EXOTICS` and `TOKYO-LCG2_PHYS-EXOTICS`
 
+The repository is mirrored to [Github](https://github.com/vaustrup/ExoticsDiskspaceUsage), from where the data is fetched in the [Exotics Storage Documenation](https://gitlab.cern.ch/atlas-phys/exot/docs/exotics/-/blob/master/docs/ExoStorageDocs.md?ref_type=heads&plain=1#L272), such that the numbers in the documentation are automatically up-to-date. (This workaround is necessary, because, unfortunately, fetching directly from Gitlab does not work.)
+
 ## CI pipeline setup
 
 The workflow is defined in [.gitlab-ci.yml](.gitlab-ci.yml).
