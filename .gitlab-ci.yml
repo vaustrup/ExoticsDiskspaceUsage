@@ -17,7 +17,7 @@ grid:
     - echo '"atlas" "voms-atlas-auth.cern.ch" "443" "/DC=ch/DC=cern/OU=computers/CN=atlas-auth.cern.ch" "atlas" "24"' > ${HOME}/.voms/vomses
     - chmod 600 ${HOME}/.globus/userkey.pem
     - export X509_USER_PROXY=X509_USER_PROXY
-    - echo $PASSWORD | voms-proxy-init -voms atlas --out $CI_PROJECT_DIR/$X509_USER_PROXY
+    - echo $PASSWORD | voms-proxy-init -voms atlas --out $CI_PROJECT_DIR/$X509_USER_PROXY || true
     - if [ $? -ne 0 ]; then
         echo "voms-proxy-init returned non-zero, but continuing because proxy was still created"
         ls -l $X509_USER_PROXY 
