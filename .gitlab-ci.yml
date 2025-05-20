@@ -18,10 +18,6 @@ grid:
     - chmod 600 ${HOME}/.globus/userkey.pem
     - export X509_USER_PROXY=X509_USER_PROXY
     - echo $PASSWORD | voms-proxy-init -voms atlas --out $CI_PROJECT_DIR/$X509_USER_PROXY || true
-    - if [ $? -ne 0 ]; then
-        echo "voms-proxy-init returned non-zero, but continuing because proxy was still created"
-        ls -l $X509_USER_PROXY 
-      fi
     - export RUCIO_ACCOUNT=vaustrup
   script:
     - python3 gridspace.py --rse $DISK
