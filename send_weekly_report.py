@@ -127,7 +127,7 @@ This document is automically created once a week by the {link_string(f'https://{
 It is meant to give a comprehensive overview of the status of the Exotics diskspace and any changes that have occurred during the previous week.
 The current total diskspace used is {convert_units(total_size)}, {round(total_size/MAX_DISK_SPACE*100, 1)}\\% of the {convert_units(MAX_DISK_SPACE)} available to the Exotics group, {"an increase" if total_size>total_size_last_week else "a decrease"} of {round(abs(1-total_size/total_size_last_week)*100, 1)}\\% compared to the previous week. {round(total_size_finished/total_size*100, 1)}\\% of the used space belongs to analyses with their paper accepted by the journal.
 A total of {total_number} files is stored in the Exotics diskspace, amounting to {round(total_number/MAX_FILE_NUMBER*100, 1)}\\% of the maximum {MAX_FILE_NUMBER} allowed, {"an increase" if total_number>total_number_last_week else "a decrease"} of {round(abs(1-total_number/total_number_last_week)*100, 1)}\\% compared to the previous week.
-More detailed numbers, automatically updated daily, can be found in the {link_string('https://twiki.cern.ch/twiki/bin/viewauth/Sandbox/VolkerAndreasAustrupSandbox', 'Exotics Diskspace TWiki page')}.\\\\
+More detailed numbers, automatically updated daily, can be found in the {link_string('https://atlas-exot.docs.cern.ch/ExoStorageDocs/', 'Exotics Diskspace Documentation page')}.\\\\
 \\\\
 \\Cref{{tab:largest_directories}} lists all analysis directories using more than 1\\% of the diskspace available to the Exotics group each.
 In total, this list comprises {len(largest)} directories, accounting for {round(largest_total_size/MAX_DISK_SPACE*100, 1)}\\% of the total available diskspace.
