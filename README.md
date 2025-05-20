@@ -14,8 +14,8 @@ In addition, once a week a short summary in PDF format is compiled and is sent t
 In order for the CI to work, the following CI/CD variables have to be set in the Gitlab repository's settings:
 - ACCESS_TOKEN (for Gitlab)
 - PASSWORD (of ExoticsDiskspaceWatcher service account, for lxplus)
-- USERCERT (these are the grid credentials, currently of the Exotics disk space manager, but for security reasons hopefully credentials can be made available for the service account itself soon)
-- USERKEY
+- USERCERT (these are the grid credentials, base64-encoded, currently of the Exotics disk space manager, but for security reasons hopefully credentials can be made available for the service account itself soon)
+- USERKEY (these are the grid credentials, base64-encoded, currently of the Exotics disk space manager, but for security reasons hopefully credentials can be made available for the service account itself soon)
 
 ## eos.py
 
@@ -28,7 +28,7 @@ This script is called daily in the [CI workflow](.gitlab-ci.yml). The available 
   --report-in-gitlab    Automatically report findings (missing information, ...) in Gitlab issue.
 ```
 
-where `SUBGROUPS` is a list of subgroups to check and defaults to `["cdm", "hqt", "jdm", "lpx", "ueh"]` as defined in [constants.py](constants.py).
+where `SUBGROUPS` is a list of subgroups to check and defaults to `["ccs", "cdm", "hqt", "jdm", "jmx", "lpx", "lup", "ueh"]` as defined in [constants.py](constants.py).
 Similarly, `--report-in-gitlab` is meant to be used in the CI pipeline only. By setting this flag, an issue is created in Gitlab in case of missing information (see below) and assigned to the Exotics disk space manager. For this, the Gitlab user ID is set in [constants.py](constants.py).
 
 The script calls the [EOS Analyser](analysers/eosanalyser.py) which loops through the directories in a given subgroup's folder and tallies the numbers of files as well as the disk space required. For the given subgroup, the data in `reports/<subgroup>.csv` is updated accordingly, including the analysis' Glance code.
@@ -46,7 +46,8 @@ This script is called daily in the [CI workflow](.gitlab-ci.yml). The available 
 
 where RSE specifies the RSE to check and can be set to either `CERN-PROD_PHYS-EXOTICS` (default) or to `TOKYO-LCG2_PHYS-EXOTICS`.
 The script calls the [Gridspace Analyser](analysers/gridspaceanalyser.py).
+A [look-up table](lookup_table.csv) is used to match dataset names to analysis teams.
 
 ## send_weekly_report.py
 
-This script is called once per week in the [CI workflow](.gitlab-ci.yml). It compiles a short summary of the state of the Exotics disk space. If called from within the CERN network (e.g. in the CI pipeline), an email is sent to the Exotics disk space manager, with the report in PDF format as attachment.
+This script is called once per week in the [CI workflow](.gitlab-ci.yml). It compiles a short summary of the state of the Exotics disk space. If called from within the CERN network (e.g. in the CI pipeline), an email is sent to the Exotics disk space manager, with the report in PDF format as attachment. If you also want to receive this report, please add yourself to the list of subscribers [here](https://gitlab.cern.ch/vaustrup/exoticsdiskspaceusage/-/blob/main/helpers/constants.py?ref_type=heads#L22).
