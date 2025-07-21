@@ -74,7 +74,7 @@ eos_test:
 
 csv_to_twiki_grid:
   stage: process
-  image: registry.cern.ch/docker.io/library/python:3.12.0b2-slim-buster
+  image: registry.cern.ch/docker.io/library/python:3.13-slim-bullseye
   script:
     - python3 helpers/csv_to_twiki.py --file reports/$DISK.csv --delimiter , --highlight-header
   parallel:
@@ -89,7 +89,7 @@ csv_to_twiki_grid:
 
 csv_to_twiki_subgroup:
   stage: process
-  image: registry.cern.ch/docker.io/library/python:3.12.0b2-slim-buster
+  image: registry.cern.ch/docker.io/library/python:3.13-slim-bullseye
   script:
     - python3 helpers/csv_to_twiki.py --file reports/$SUBGROUP.csv --delimiter , --highlight-header
   parallel:
@@ -104,7 +104,7 @@ csv_to_twiki_subgroup:
 
 csv_to_twiki_lookup:
   stage: process
-  image: registry.cern.ch/docker.io/library/python:3.12.0b2-slim-buster
+  image: registry.cern.ch/docker.io/library/python:3.13-slim-bullseye
   script:
     - python3 helpers/csv_to_twiki.py --file lookup_table.csv
   artifacts:
@@ -116,7 +116,7 @@ csv_to_twiki_lookup:
 
 plot:
   stage: process
-  image: registry.cern.ch/docker.io/library/python:3.12.0b2-slim-buster
+  image: registry.cern.ch/docker.io/library/python:3.13-slim-bullseye
   before_script:
     - apt update
     - apt install -y git
@@ -150,7 +150,7 @@ commit:
 
 email:
   stage: email
-  image: registry.cern.ch/docker.io/library/python:3.12.0b2-slim-buster
+  image: registry.cern.ch/docker.io/library/python:3.13-slim-bullseye
   before_script:
     - apt update
     - apt install -y git
