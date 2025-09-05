@@ -1,5 +1,7 @@
 import csv
+import os
 import re
+import time
 
 from rucio.client import Client
 
@@ -33,7 +35,7 @@ class GridSpaceAnalyser:
                 else:
                     analysis_name = row[2]
                     self._scopes[scope][tag]["analysis"] = analysis_name
-                    self._analyses[analysis_name] = {"ntotal": 0, "ntotal_nolimit": 0, "size": 0}
+                    self._analyses[analysis_name] = {"ntotal": 0, "ntotal_nolimit": 0, "ntotal_old": 0, "size": 0}
 
     def analyse_datasets(self) -> None:
         '''
@@ -49,6 +51,7 @@ class GridSpaceAnalyser:
             for f in content:
                 size += f["bytes"]
             limited = self.replica_lifetime_is_limited(scope, name)
+            old = self.replica_is_old(scope, name)
             matching_tags = self.match_tags(scope, name) 
             if matching_tags is None:
                 continue
@@ -60,6 +63,8 @@ class GridSpaceAnalyser:
                 self._analyses[analysis_name]["size"] += size
                 if not limited:
                     self._analyses[analysis_name]["ntotal_nolimit"] += 1
+                if old:
+                    self._analyses[analysis_name]["ntotal_old"] += 1
         self.check_obsolete_tags()
 
     def scope_is_valid(self, scope: str) -> bool:
@@ -98,6 +103,22 @@ class GridSpaceAnalyser:
             log.warning(f"Found multiple tags matching file {name} in scope {scope}.")
         return matching_tags
 
+    def replica_is_old(self, scope: str, name: str, threshold: int = 365*24*60*60) ->bool:
+        for f in self._client.list_file_replicas(scope=scope, name=name):
+            file_url: str = f["url"]
+            if not file_url.startswith("root://eosatlas.cern.ch:1094/"):
+                continue
+            local_path = file_url.replace("root://eosatlas.cern.ch:1094/", "")
+            try:
+                atime = os.path.getatime(local_path)
+                mtime = os.path.getmtime(local_path)
+                ctime = os.path.getctime(local_path)
+                maxtime = max(atime,mtime,ctime)
+                return time.time() - maxtime > threshold
+            except:
+                return False
+        return False
+
     def replica_lifetime_is_limited(self, scope: str, name: str) -> bool:
         '''
         Check if the lifetime of a given dataset is limited on the group disk
@@ -134,8 +155,8 @@ class GridSpaceAnalyser:
         log.info(f"Creating report for {self._rse}.")
         with open(f'reports/{self._rse}.csv', 'w') as f:
             writer = csv.writer(f, delimiter=',')
-            writer.writerow(["Analysis", "Number of Files", "Disk Usage in GB", "Number of Files without Expiration"])
+            writer.writerow(["Analysis", "Number of Files", "Disk Usage in GB", "Number of Files without Expiration", "Number of Files accessed >1 year ago"])
             for name, details in self._analyses.items():
                 size = float(f"{(details['size']/1024.**3):.5g}")
-                writer.writerow([name, details["ntotal"], f'{size:g}', details["ntotal_nolimit"]])
-                log.info(f"{name}  {details['ntotal']} {size:g} {details['ntotal_nolimit']}")
+                writer.writerow([name, details["ntotal"], f'{size:g}', details["ntotal_nolimit"], details["ntotal_old"]])
+                log.info(f"{name}  {details['ntotal']} {size:g} {details['ntotal_nolimit']} {details['ntotal_nolimit']}")
