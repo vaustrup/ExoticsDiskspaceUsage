@@ -14,7 +14,7 @@ class GridSpaceAnalyser:
         self._client = Client()
         self._scopes = {}
         self._scopes_not_found = []
-        self._analyses = {"uncategorised": {"ntotal": 0, "ntotal_nolimit": 0, "size": 0}}
+        self._analyses = {"uncategorised": {"ntotal": 0, "ntotal_nolimit": 0, "ntotal_old": 0, "size": 0}}
         self._rse = rse
 
     def load_lookup_table(self) -> None:
@@ -104,19 +104,21 @@ class GridSpaceAnalyser:
         return matching_tags
 
     def replica_is_old(self, scope: str, name: str, threshold: int = 365*24*60*60) ->bool:
-        for f in self._client.list_file_replicas(scope=scope, name=name):
-            file_url: str = f["url"]
-            if not file_url.startswith("root://eosatlas.cern.ch:1094/"):
-                continue
-            local_path = file_url.replace("root://eosatlas.cern.ch:1094/", "")
-            try:
-                atime = os.path.getatime(local_path)
-                mtime = os.path.getmtime(local_path)
-                ctime = os.path.getctime(local_path)
-                maxtime = max(atime,mtime,ctime)
-                return time.time() - maxtime > threshold
-            except:
-                return False
+        for replica in self._client.list_replicas([{'scope': scope, 'name': name}]):
+            for rse_name, replica_info in replica['rses'].items():
+                if rse_name == self._rse:
+                    for pfn in replica_info:
+                        if pfn.startswith("root://eosatlas.cern.ch:1094/"):
+                            local_path = pfn.replace("root://eosatlas.cern.ch:1094/", "")
+                            try:
+                                atime = os.path.getatime(local_path)
+                                mtime = os.path.getmtime(local_path)
+                                ctime = os.path.getctime(local_path)
+                                maxtime = max(atime, mtime, ctime)
+                                return (time.time() - maxtime) > threshold
+                            except (OSError, FileNotFoundError):
+                                # File doesn't exist locally or can't be accessed
+                                False
         return False
 
     def replica_lifetime_is_limited(self, scope: str, name: str) -> bool:
