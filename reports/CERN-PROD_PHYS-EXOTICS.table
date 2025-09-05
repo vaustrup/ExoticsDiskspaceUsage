@@ -1,13 +1,13 @@
-| * Analysis * | * Number of Files * | * Disk Usage in GB * | * Number of Files without Expiration * |
-| uncategorised | 2722 | 40522 | 2722 |
-| ANA-EXOT-2019-26 | 1451 | 102.27 | 0 |
-| ANA-EXOT-2022-33 | 817 | 8822.3 | 817 |
-| ANA-EXOT-2019-27 | 27 | 20870 | 27 |
-| GENERAL | 1 | 0.088322 | 1 |
-| ANA-EXOT-2018-06 | 1042 | 11331 | 1042 |
-| ANA-EXOT-2020-10 | 2873 | 19651 | 0 |
-| ANA-EXOT-2018-20 | 1167 | 11816 | 0 |
-| ANA-EXOT-2022-32 | 11 | 0 | 0 |
-| ANA-EXOT-2019-39 | 742 | 524.87 | 0 |
-| ANA-HDBS-2018-57 | 92 | 1231.1 | 92 |
+| * Analysis * | * Number of Files * | * Disk Usage in GB * | * Number of Files without Expiration * | * Number of Files accessed >1 year ago * |
+| uncategorised | 2722 | 40522 | 2722 | 0 |
+| ANA-EXOT-2019-26 | 1451 | 102.27 | 0 | 0 |
+| ANA-EXOT-2022-33 | 817 | 8822.3 | 817 | 0 |
+| ANA-EXOT-2019-27 | 27 | 20870 | 27 | 0 |
+| GENERAL | 1 | 0.088322 | 1 | 0 |
+| ANA-EXOT-2018-06 | 1042 | 11331 | 1042 | 0 |
+| ANA-EXOT-2020-10 | 2873 | 19651 | 0 | 0 |
+| ANA-EXOT-2018-20 | 1167 | 11816 | 0 | 0 |
+| ANA-EXOT-2022-32 | 11 | 0 | 0 | 0 |
+| ANA-EXOT-2019-39 | 742 | 524.87 | 0 | 0 |
+| ANA-HDBS-2018-57 | 92 | 1231.1 | 92 | 0 |
 <!-- This file was created automatically from reports/CERN-PROD_PHYS-EXOTICS.csv. Do not edit it manually. -->
