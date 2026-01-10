@@ -1,7 +1,7 @@
 | * Analysis Team * | * Disk Usage in GB * | * Number of files * | * Glance code * |
 | ANA-EXOT-2019-02 | 4237.8 | 4572 | ANA-EXOT-2019-02 |
 | ANA-EXOT-2021-02_singleVLQcombination | 0.47118 | 805 | ANA-EXOT-2021-02 |
-| ANA-EXOT-2022-44_multitop | 9548 | 21077 | ANA-EXOT-2022-44 |
+| ANA-EXOT-2022-44_multitop | 9548 | 21188 | ANA-EXOT-2022-44 |
 | ANA-EXOT-2025-07_DMFV | 22.408 | 308 | ANA-EXOT-2025-07 |
 | DarkMesons | 1182.7 | 75848 | ANA-EXOT-2019-17/ANA-EXOT-2023-09 |
 | OSML | 2584 | 20031 | ANA-EXOT-2018-58/ANA-EXOT-2020-01 |
@@ -16,5 +16,5 @@
 | ttbarres_DM | 255.75 | 45957 | ANA-EXOT-2018-48 |
 | ttreshad_2018 | 582.23 | 26442 | ANA-EXOT-2018-48 |
 | twmetboosted | 661.53 | 117528 | ANA-EXOT-2021-01 |
-| Total Sum | 31912 | 639476 |  |
+| Total Sum | 31912 | 639587 |  |
 <!-- This file was created automatically from reports/hqt.csv. Do not edit it manually. -->
