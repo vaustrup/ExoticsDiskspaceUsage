@@ -2,6 +2,7 @@ import csv
 import os
 
 from helpers.constants import get_glance_codes
+from helpers.eosinterface import eos_du
 from helpers.logger import log
 
 class EOSAnalyser:
@@ -40,27 +41,14 @@ class EOSAnalyser:
         sizes = []
         numbers = []
         log.info(f"Found {len(analysis_names)} analyses in subgroup {subgroup}.")
-        number_of_dirs = 0
         for i_analysis, analysis in enumerate(analysis_names):
-            number_of_files = 0
-            size = 0
-            number_of_dirs += 1
-            for dirpath, _, filenames in os.walk(f"{self._directory}/{subgroup}/{analysis}"):
-                number_of_dirs += 1
-                number_of_files += len(filenames)
-                for filename in filenames:
-                    filepath = os.path.join(dirpath, filename)
-                    if os.path.isfile(filepath):
-                        # make sure to treat symbolic links correctly
-                        if os.path.islink(filepath):
-                            size += os.lstat(filepath).st_size
-                        else:
-                            size += os.path.getsize(filepath)
+            number_of_files = sum(len(files) for _, _, files in os.walk(f"{self._directory}/{subgroup}/{analysis}"))
+            size = eos_du(f"{self._directory}/{subgroup}/{analysis}")
             numbers.append(number_of_files)
             sizes.append(size)
-            if (i_analysis+1)%10==10:
+            if (i_analysis+1)%10==0:
                 log.info(f"Checked {i_analysis+1}/{len(analysis_names)} analyses.")
-        print(number_of_dirs)
+            log.debug(f"Checked {analysis}. Found {size} bytes in {number_of_files} files.")
         total_size = sum(sizes)
         total_numbers = sum(numbers)
         log.info(f"Finished checking subgroup {subgroup}.")
