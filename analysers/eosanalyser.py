@@ -42,8 +42,24 @@ class EOSAnalyser:
         numbers = []
         log.info(f"Found {len(analysis_names)} analyses in subgroup {subgroup}.")
         for i_analysis, analysis in enumerate(analysis_names):
-            number_of_files = sum(len(files) for _, _, files in os.walk(f"{self._directory}/{subgroup}/{analysis}"))
-            size = eos_du(f"{self._directory}/{subgroup}/{analysis}")
+            number_of_files = 0
+            size = 0
+            try:
+                size = eos_du(f"{self._directory}/{subgroup}/{analysis}")
+                number_of_files = sum(len(files) for _, _, files in os.walk(f"{self._directory}/{subgroup}/{analysis}"))
+            except:
+                for dirpath, _, filenames in os.walk(f"{self._directory}/{subgroup}/{analysis}"):
+                    number_of_files += len(filenames)
+                    for filename in filenames:
+                        filepath = os.path.join(dirpath, filename)
+                        if not os.path.isfile(filepath):
+                            continue
+                        # make sure to treat symbolic links correctly
+                        if os.path.islink(filepath):
+                            size += os.lstat(filepath).st_size
+                        else:
+                            size += os.path.getsize(filepath)
+
             numbers.append(number_of_files)
             sizes.append(size)
             if (i_analysis+1)%10==0:
