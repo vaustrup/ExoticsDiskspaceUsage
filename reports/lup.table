@@ -1,18 +1,18 @@
 | * Analysis Team * | * Disk Usage in GB * | * Number of files * | * Glance code * |
 | ANA-EXOT-2020-03_DisplacedTaus | 1469 | 1583 | ANA-EXOT-2020-03 |
-| ANA-EXOT-2023-30_SUEP | 1292.4 | 3753 | ANA-EXOT-2023-30 |
+| ANA-EXOT-2023-30_SUEP | 1236.8 | 3714 | ANA-EXOT-2023-30 |
 | ANA-EXOT-2024-14_dEdx | 274.94 | 4806 | ANA-EXOT-2024-14 |
-| ANA-EXOT-2024-19_multicharged | 754.44 | 7837 | ANA-EXOT-2024-19 |
+| ANA-EXOT-2024-19_multicharged | 754.71 | 7849 | ANA-EXOT-2024-19 |
 | ANA-EXOT-2024-20_LowMassDVMu | 1857.9 | 2694 | ANA-EXOT-2024-20 |
 | ANA-EXOT-2024-21_DVMu | 1330.4 | 130092 | ANA-EXOT-2024-21 |
 | ANA-EXOT-2024-22_DelayedJets | 7245.2 | 11716 | ANA-EXOT-2024-22 |
 | ANA-EXOT-2024-23_CalRatio-top | 28.348 | 12 | ANA-EXOT-2024-23 |
-| ANA-EXOT-2024-24_DisplacedTaus | 6711 | 3287 | ANA-EXOT-2024-24 |
-| ANA-EXOT-2024-25_SMP | 532.36 | 47630 | ANA-EXOT-2024-25 |
+| ANA-EXOT-2024-24_DisplacedTaus | 6710.2 | 3286 | ANA-EXOT-2024-24 |
+| ANA-EXOT-2024-25_SMP | 529.91 | 47827 | ANA-EXOT-2024-25 |
 | ANA-EXOT-2024-26_dEdxtracklets | 355.02 | 80968 | ANA-EXOT-2024-26 |
 | ANA-EXOT-2025-03_MuSAVertex | 185.2 | 8271 | ANA-EXOT-2025-03 |
 | ANA-EXOT-2025-08_LRSMdHNL | 123.26 | 10793 | ANA-EXOT-2025-08 |
 | ANA-EXOT-2025-10_dHNL | 850.98 | 1454 | ANA-EXOT-2025-10 |
 | ANA-EXOT-2025-24_MSVtxRun3 | 128.24 | 4099 | ANA-EXOT-2025-24 |
-| Total Sum | 23139 | 318995 |  |
+| Total Sum | 23080 | 319164 |  |
 <!-- This file was created automatically from reports/lup.csv. Do not edit it manually. -->
