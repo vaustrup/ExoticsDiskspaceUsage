@@ -1,7 +1,9 @@
 import csv
-import os
+import math
+import pandas as pd
+import pathlib
 import re
-import time
+from datetime import datetime, timezone
 
 from rucio.client import Client
 
@@ -10,12 +12,22 @@ from helpers.logger import log
 
 class GridSpaceAnalyser:
 
-    def __init__(self, rse="CERN-PROD_PHYS-EXOTICS"):
+    def __init__(self, rse="CERN-PROD_PHYS-EXOTICS", date: str|None = None):
         self._client = Client()
         self._scopes = {}
         self._scopes_not_found = []
         self._analyses = {"uncategorised": {"ntotal": 0, "ntotal_nolimit": 0, "ntotal_old": 0, "size": 0}}
         self._rse = rse
+        self._date = date
+        self.report_path = pathlib.Path("/eos/atlas/atlascerngroupdisk/data-adc/rucio-analytix/reports/")
+
+    @property
+    def date(self):
+        if self._date is not None:
+            return self._date
+        pattern = re.compile(r"\d{4}-\d{2}-\d{2}")
+        latest_dir = max(d.name for d in self.report_path.iterdir() if d.is_dir() and pattern.match(d.name))
+        return latest_dir
 
     def load_lookup_table(self) -> None:
         '''
@@ -41,17 +53,18 @@ class GridSpaceAnalyser:
         '''
         Loop over all datasets on the RSE and match them to analyses.
         '''
-        for line in self._client.list_datasets_per_rse(rse=self._rse):
-            scope = line["scope"]
+        header = ['RSE', 'scope', 'name', 'account', 'size', 'created', 'updated', 'accessed', 'ruleid', 'state']
+
+        f = self.report_path / self.date / "datasets_per_rse" / f"{self._rse}.datasets_per_rse.{self.date}.csv.bz2"
+        reader = pd.read_csv(f, header=None, names=header, compression='bz2', delimiter="\t")
+        for line in reader.itertuples(index=False):
+            scope = line.scope
             if not self.scope_is_valid(scope):
                 continue            
-            name = line["name"]
-            size = 0
-            content = self._client.list_content(scope, name)
-            for f in content:
-                size += f["bytes"]
-            limited = self.replica_lifetime_is_limited(scope, name)
-            old = self.replica_is_old(scope, name)
+            name = line.name
+            size = line.size
+            limited = self.replica_lifetime_is_limited(line.ruleid)
+            old = self.replica_is_old(line.created, line.updated, line.accessed)
             matching_tags = self.match_tags(scope, name) 
             if matching_tags is None:
                 continue
@@ -103,25 +116,20 @@ class GridSpaceAnalyser:
             log.warning(f"Found multiple tags matching file {name} in scope {scope}.")
         return matching_tags
 
-    def replica_is_old(self, scope: str, name: str, threshold: int = 365*24*60*60) ->bool:
-        for replica in self._client.list_replicas([{'scope': scope, 'name': name}]):
-            for rse_name, replica_info in replica['rses'].items():
-                if rse_name == self._rse:
-                    for pfn in replica_info:
-                        if pfn.startswith("root://eosatlas.cern.ch:1094/"):
-                            local_path = pfn.replace("root://eosatlas.cern.ch:1094/", "")
-                            try:
-                                atime = os.path.getatime(local_path)
-                                mtime = os.path.getmtime(local_path)
-                                ctime = os.path.getctime(local_path)
-                                maxtime = max(atime, mtime, ctime)
-                                return (time.time() - maxtime) > threshold
-                            except (OSError, FileNotFoundError):
-                                # File doesn't exist locally or can't be accessed
-                                False
-        return False
-
-    def replica_lifetime_is_limited(self, scope: str, name: str) -> bool:
+    def replica_is_old(self, created, updated, accessed,threshold: int = 365*24*60*60) ->bool:
+        def parse_time(t):
+            if t is None or pd.isna(t):
+                return None
+            return datetime.fromisoformat(str(t).replace("Z", "+00:00")).timestamp()
+        
+        times = [parse_time(created), parse_time(updated), parse_time(accessed)]
+        times = [t for t in times if t is not None]
+        if not times:
+            return False
+        maxtime = max(times)
+        return (datetime.now(timezone.utc).timestamp() - maxtime) > threshold
+        
+    def replica_lifetime_is_limited(self, ruleid: str) -> bool:
         '''
         Check if the lifetime of a given dataset is limited on the group disk
         Arguments:
@@ -130,13 +138,14 @@ class GridSpaceAnalyser:
         Return:
             True if lifetime of dataset on group disk is limited, False otherwise
         '''
-        try:
-            replica_information = next(self._client.list_replication_rules(filters={"scope": scope, "name": name, "rse_expression": self._rse}))
-            if replica_information["expires_at"] is None:
-                log.debug(f"Rule for file {name} in scope {scope} will never expire.")
+        if isinstance(ruleid, float) and math.isnan(ruleid):
+            return False
+        
+        ids = ruleid.split(",")
+        for i in ids:
+            rule = self._client.get_replication_rule(i)
+            if rule["expires_at"] is None:
                 return False
-        except StopIteration:
-            log.debug(f"Rule for file {name} in scope {scope} for site {self._rse} has been deleted or has never existed in the first place.")
         return True
 
     def check_obsolete_tags(self) -> None:
@@ -161,4 +170,4 @@ class GridSpaceAnalyser:
             for name, details in self._analyses.items():
                 size = float(f"{(details['size']/1024.**3):.5g}")
                 writer.writerow([name, details["ntotal"], f'{size:g}', details["ntotal_nolimit"], details["ntotal_old"]])
-                log.info(f"{name}  {details['ntotal']} {size:g} {details['ntotal_nolimit']} {details['ntotal_nolimit']}")
+                log.info(f"{name}  {details['ntotal']} {size:g} {details['ntotal_nolimit']} {details['ntotal_old']}")
