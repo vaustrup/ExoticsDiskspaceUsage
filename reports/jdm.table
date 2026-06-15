@@ -7,16 +7,16 @@
 | ANA-EXOT-2023-32_svjl_old | 151.65 | 1996 |  |
 | ANA-EXOT-2024-01_dibjetISR | 7022.3 | 2383 | ANA-EXOT-2024-01 |
 | MultiBJet | 90.573 | 70 | ANA-EXOT-2018-09 |
-| SC_NCBH_NMDS | 1443.1 | 107391 | ANA-EXOT-2022-21 |
+| SC_NCBH_NMDS | 1443.1 | 107394 | ANA-EXOT-2022-21 |
 | dibjet | 708.07 | 2791 | ANA-EXOT-2019-03 |
 | dijet | 5823.7 | 105787 | ANA-EXOT-2019-03 |
 | dijetISR | 1542.6 | 8130 | ANA-EXOT-2019-01 |
-| lepdijet | 2152.3 | 94068 | ANA-EXOT-2018-32/ANA-EXOT-2020-15/ANA-EXOT-2022-07 |
+| lepdijet | 2152.3 | 94066 | ANA-EXOT-2018-32/ANA-EXOT-2020-15/ANA-EXOT-2022-07 |
 | monoSWW | 571.97 | 51491 | ANA-EXOT-2018-40 |
-| monojet | 420.45 | 66703 | ANA-EXOT-2018-06 |
-| qgdijet | 3316 | 211263 | ANA-EXOT-2019-32 |
+| monojet | 420.45 | 66702 | ANA-EXOT-2018-06 |
+| qgdijet | 3316.8 | 211250 | ANA-EXOT-2019-32 |
 | svjets | 198.74 | 13262 | ANA-EXOT-2022-37 |
 | svjets-schannel | 915.66 | 5964 | ANA-EXOT-2021-19 |
-| vbfinv | 887.16 | 56107 | ANA-EXOT-2022-36 |
-| Total Sum | 39445 | 942879 |  |
+| vbfinv | 887.16 | 56105 | ANA-EXOT-2022-36 |
+| Total Sum | 39446 | 942864 |  |
 <!-- This file was created automatically from reports/jdm.csv. Do not edit it manually. -->
