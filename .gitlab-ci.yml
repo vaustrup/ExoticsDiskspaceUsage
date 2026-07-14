@@ -74,6 +74,29 @@ eos_test:
       - SUBGROUP: [cdm]
   rules: !reference [.rules, merge_request]
 
+finished_analyses:
+  stage: report
+  image: $PYTHON_IMAGE
+  before_script:
+    - pip3 install stare
+    - mkdir -p "$HOME/.local/share/stare"
+    - echo "$STARE_TOKEN_JSON" | base64 -d > "$HOME/.local/share/stare/tokens.json"
+    - chmod 600 "$HOME/.local/share/stare/tokens.json"
+  script:
+    - python3 update_finished_analyses.py
+  artifacts:
+    paths:
+      - ./finished_analyses.txt
+    expire_in: 24h
+  retry: 1 # sometimes there are issues e.g. when pulling docker image
+  allow_failure: True
+  rules: !reference [.rules, daily]
+
+finished_analyses_test:
+  extends: finished_analyses
+  stage: test
+  rules: !reference [.rules, merge_request]
+
 csv_to_twiki:
   stage: process
   image: $PYTHON_IMAGE
@@ -125,6 +148,7 @@ commit:
     - git remote add gitlab_origin https://oauth2:$ACCESS_TOKEN@$CI_SERVER_HOST/$CI_PROJECT_PATH.git
     - git add reports/*.csv
     - git add reports/*.table
+    - git add finished_analyses.txt
     # - git add reports/*.pdf
     # commit and push only if changes present
     # https://stackoverflow.com/questions/22040113/how-to-let-jenkins-git-commit-only-if-there-are-changes
