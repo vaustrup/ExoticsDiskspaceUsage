@@ -1,11 +1,8 @@
 import csv
-import math
 import pandas as pd
 import pathlib
 import re
 from datetime import datetime, timezone
-
-from rucio.client import Client
 
 from helpers.logger import log
 
@@ -13,10 +10,9 @@ from helpers.logger import log
 class GridSpaceAnalyser:
 
     def __init__(self, rse="CERN-PROD_PHYS-EXOTICS", date: str|None = None):
-        self._client = Client()
         self._scopes = {}
         self._scopes_not_found = []
-        self._analyses = {"uncategorised": {"ntotal": 0, "ntotal_nolimit": 0, "ntotal_old": 0, "size": 0}}
+        self._analyses = {"uncategorised": {"ntotal": 0, "ntotal_old": 0, "size": 0}}
         self._rse = rse
         self._date = date
         self.report_path = pathlib.Path("/eos/atlas/atlascerngroupdisk/data-adc/rucio-analytix/reports/")
@@ -47,7 +43,7 @@ class GridSpaceAnalyser:
                 else:
                     analysis_name = row[2]
                     self._scopes[scope][tag]["analysis"] = analysis_name
-                    self._analyses[analysis_name] = {"ntotal": 0, "ntotal_nolimit": 0, "ntotal_old": 0, "size": 0}
+                    self._analyses[analysis_name] = {"ntotal": 0, "ntotal_old": 0, "size": 0}
 
     def analyse_datasets(self) -> None:
         '''
@@ -63,9 +59,8 @@ class GridSpaceAnalyser:
                 continue            
             name = line.name
             size = line.size
-            limited = self.replica_lifetime_is_limited(line.ruleid)
             old = self.replica_is_old(line.created, line.updated, line.accessed)
-            matching_tags = self.match_tags(scope, name) 
+            matching_tags = self.match_tags(scope, name)
             if matching_tags is None:
                 continue
             for tag in matching_tags:
@@ -74,8 +69,6 @@ class GridSpaceAnalyser:
                     analysis_name = "uncategorised"
                 self._analyses[analysis_name]["ntotal"] += 1
                 self._analyses[analysis_name]["size"] += size
-                if not limited:
-                    self._analyses[analysis_name]["ntotal_nolimit"] += 1
                 if old:
                     self._analyses[analysis_name]["ntotal_old"] += 1
         self.check_obsolete_tags()
@@ -129,25 +122,6 @@ class GridSpaceAnalyser:
         maxtime = max(times)
         return (datetime.now(timezone.utc).timestamp() - maxtime) > threshold
         
-    def replica_lifetime_is_limited(self, ruleid: str) -> bool:
-        '''
-        Check if the lifetime of a given dataset is limited on the group disk
-        Arguments:
-            scope: str -> scope to check
-            name: str -> name of dataset to check
-        Return:
-            True if lifetime of dataset on group disk is limited, False otherwise
-        '''
-        if isinstance(ruleid, float) and math.isnan(ruleid):
-            return False
-        
-        ids = ruleid.split(",")
-        for i in ids:
-            rule = self._client.get_replication_rule(i)
-            if rule["expires_at"] is None:
-                return False
-        return True
-
     def check_obsolete_tags(self) -> None:
         '''
         Print a warning if a tag in the lookup table was not found in any of the samples.
@@ -166,8 +140,8 @@ class GridSpaceAnalyser:
         log.info(f"Creating report for {self._rse}.")
         with open(f'reports/{self._rse}.csv', 'w') as f:
             writer = csv.writer(f, delimiter=',')
-            writer.writerow(["Analysis", "Number of Files", "Disk Usage in GB", "Number of Files without Expiration", "Number of Files accessed >1 year ago"])
+            writer.writerow(["Analysis", "Number of Files", "Disk Usage in GB", "Number of Files accessed >1 year ago"])
             for name, details in self._analyses.items():
                 size = float(f"{(details['size']/1024.**3):.5g}")
-                writer.writerow([name, details["ntotal"], f'{size:g}', details["ntotal_nolimit"], details["ntotal_old"]])
-                log.info(f"{name}  {details['ntotal']} {size:g} {details['ntotal_nolimit']} {details['ntotal_old']}")
+                writer.writerow([name, details["ntotal"], f'{size:g}', details["ntotal_old"]])
+                log.info(f"{name}  {details['ntotal']} {size:g} {details['ntotal_old']}")

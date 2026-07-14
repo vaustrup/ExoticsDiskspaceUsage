@@ -16,8 +16,6 @@ In addition, once a week a short summary in PDF format is compiled and is sent t
 In order for the CI to work, the following CI/CD variables have to be set in the Gitlab repository's settings:
 - ACCESS_TOKEN (for Gitlab)
 - PASSWORD (of ExoticsDiskspaceWatcher service account, for lxplus)
-- USERCERT (these are the grid credentials, base64-encoded, currently of the Exotics disk space manager, but for security reasons hopefully credentials can be made available for the service account itself soon)
-- USERKEY (these are the grid credentials, base64-encoded, currently of the Exotics disk space manager, but for security reasons hopefully credentials can be made available for the service account itself soon)
 
 ## eos.py
 

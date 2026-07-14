@@ -19,17 +19,9 @@ variables:
 # create and commit all reports only on daily schedule
 grid:
   stage: report
-  image: gitlab-registry.cern.ch/vaustrup/rucio-clients:main
+  image: $PYTHON_IMAGE
   before_script:
-    - mkdir -p ${HOME}/.globus
-    - base64 -d $USERCERT > ${HOME}/.globus/usercert.pem
-    - base64 -d $USERKEY > ${HOME}/.globus/userkey.pem
-    - mkdir -p ${HOME}/.voms
-    - echo '"atlas" "voms-atlas-auth.cern.ch" "443" "/DC=ch/DC=cern/OU=computers/CN=atlas-auth.cern.ch" "atlas" "24"' > ${HOME}/.voms/vomses
-    - chmod 600 ${HOME}/.globus/userkey.pem
-    - export X509_USER_PROXY=X509_USER_PROXY
-    - echo $PASSWORD | voms-proxy-init -voms atlas --out $CI_PROJECT_DIR/$X509_USER_PROXY || true
-    - export RUCIO_ACCOUNT=vaustrup
+    - pip3 install pandas
   script:
     - python3 gridspace.py --rse $DISK
   parallel:
