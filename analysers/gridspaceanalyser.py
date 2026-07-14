@@ -24,8 +24,18 @@ class GridSpaceAnalyser:
         if self._date is not None:
             return self._date
         pattern = re.compile(r"\d{4}-\d{2}-\d{2}")
-        latest_dir = max(d.name for d in self.report_path.iterdir() if d.is_dir() and pattern.match(d.name))
-        return latest_dir
+        today = datetime.now(timezone.utc).date()
+        candidates = sorted(
+            (d.name for d in self.report_path.iterdir() if d.is_dir() and pattern.match(d.name)),
+            reverse=True,
+        )
+        for candidate in candidates:
+            if datetime.strptime(candidate, "%Y-%m-%d").date() > today:
+                continue
+            bz2_file = self.report_path / candidate / "datasets_per_rse" / f"{self._rse}.datasets_per_rse.{candidate}.csv.bz2"
+            if bz2_file.is_file():
+                return candidate
+        raise FileNotFoundError(f"No datasets_per_rse dump found for {self._rse} on or before {today}.")
 
     def load_lookup_table(self) -> None:
         '''
