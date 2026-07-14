@@ -12,10 +12,12 @@ The repository is mirrored to [Github](https://github.com/vaustrup/ExoticsDisksp
 
 The workflow is defined in [.gitlab-ci.yml](.gitlab-ci.yml).
 The scripts [eos.py](eos.py) and [gridspace.py](gridspace.py) are run daily at 12am CERN time, to update the data in `reports/`. The `*.csv` files are automatically converted into TWiki format in order to show the data on the Exotics Disk Space TWiki page.
+[update_finished_analyses.py](update_finished_analyses.py) also runs daily, to keep [finished_analyses.txt](finished_analyses.txt) up-to-date.
 In addition, once a week a short summary in PDF format is compiled and is sent to the Exotics disk space manager via email. This is done using the [send_weekly_report.py](send_weekly_report.py) script.
 In order for the CI to work, the following CI/CD variables have to be set in the Gitlab repository's settings:
 - ACCESS_TOKEN (for Gitlab)
 - PASSWORD (of ExoticsDiskspaceWatcher service account, for lxplus)
+- STARE_TOKEN_JSON (for [stare](https://github.com/kratsg/stare)'s access to the ATLAS Glance API, see [update_finished_analyses.py](#update_finished_analysespy) below)
 
 ## eos.py
 
@@ -47,6 +49,25 @@ This script is called daily in the [CI workflow](.gitlab-ci.yml). The available 
 where RSE specifies the RSE to check and can be set to either `CERN-PROD_PHYS-EXOTICS` (default) or to `TOKYO-LCG2_PHYS-EXOTICS`.
 The script calls the [Gridspace Analyser](analysers/gridspaceanalyser.py).
 A [look-up table](lookup_table.csv) is used to match dataset names to analysis teams.
+
+## update_finished_analyses.py
+
+This script is called daily in the [CI workflow](.gitlab-ci.yml). For every Glance code in [glance_codes.csv](glance_codes.csv) that is not already listed in [finished_analyses.txt](finished_analyses.txt), it uses [stare](https://github.com/kratsg/stare) to check whether the analysis' paper has been accepted by a journal, and appends the code to [finished_analyses.txt](finished_analyses.txt) if so.
+The script calls the [Publication Analyser](analysers/publicationanalyser.py), which looks up each analysis via the ATLAS Glance API, finds its linked paper (if any), and checks the paper's journal acceptance date.
+
+`stare` authenticates via CERN SSO (OAuth2 PKCE) and needs a one-time interactive login to obtain a token that can be refreshed automatically afterwards. Since the CI runner can't open a browser, this login has to be done once locally, with the resulting token stored as the `STARE_TOKEN_JSON` CI/CD variable:
+
+```bash
+python3 -c "
+from pathlib import Path
+from stare.auth import TokenManager
+TokenManager(token_path=Path('stare_token.json')).login()
+"
+base64 -i stare_token.json | pbcopy   # macOS; use -w0 on Linux, then copy the output
+rm stare_token.json                    # it contains a live refresh token, don't leave it on disk
+```
+
+Paste the copied value into a new **masked, protected** `STARE_TOKEN_JSON` CI/CD variable. The CI job writes it back to `stare`'s default token file location before running the script, so `stare` can refresh the access token automatically on each run. Note that this relies on CERN SSO's own session lifetime for the refresh token — if that's shorter than the CI schedule, this one-time login will need to be repeated occasionally.
 
 ## send_weekly_report.py
 
