@@ -5,6 +5,17 @@ stages:
   - test
   - email
 
+variables:
+  PYTHON_IMAGE: registry.cern.ch/docker.io/library/python:3.13-slim-bullseye
+
+.rules:
+  daily:
+    - if: $CI_PIPELINE_SOURCE == "schedule" && $CI_PIPELINE_TIMING == "daily"
+  weekly:
+    - if: $CI_PIPELINE_SOURCE == "schedule" && $CI_PIPELINE_TIMING == "weekly"
+  merge_request:
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+
 # create and commit all reports only on daily schedule
 grid:
   stage: report
@@ -29,8 +40,7 @@ grid:
       - ./reports/$DISK.csv
     expire_in: 24h
   retry: 1 # sometimes there are issues e.g. when pulling docker image
-  rules:
-    - if: $CI_PIPELINE_SOURCE == "schedule" && $CI_PIPELINE_TIMING == "daily"
+  rules: !reference [.rules, daily]
   allow_failure: True
 
 grid_test:
@@ -39,8 +49,7 @@ grid_test:
   parallel:
     matrix:
       - DISK: [TOKYO-LCG2_PHYS-EXOTICS]
-  rules:
-    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+  rules: !reference [.rules, merge_request]
 
 eos:
   stage: report
@@ -60,8 +69,7 @@ eos:
       - ./reports/$SUBGROUP.csv
     expire_in: 24h
   retry: 1 # sometimes there are issues e.g. when pulling docker image
-  rules:
-    - if: $CI_PIPELINE_SOURCE == "schedule" && $CI_PIPELINE_TIMING == "daily"
+  rules: !reference [.rules, daily]
 
 eos_test:
   extends: eos
@@ -69,54 +77,36 @@ eos_test:
   parallel:
     matrix:
       - SUBGROUP: [cdm]
-  rules:
-    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+  rules: !reference [.rules, merge_request]
 
-csv_to_twiki_grid:
+csv_to_twiki:
   stage: process
-  image: registry.cern.ch/docker.io/library/python:3.13-slim-bullseye
+  image: $PYTHON_IMAGE
   script:
-    - python3 helpers/csv_to_twiki.py --file reports/$DISK.csv --delimiter , --highlight-header
+    - python3 helpers/csv_to_twiki.py --file reports/$NAME.csv --delimiter , --highlight-header
   parallel:
     matrix:
-      - DISK: [CERN-PROD_PHYS-EXOTICS, TOKYO-LCG2_PHYS-EXOTICS]
+      - NAME: [CERN-PROD_PHYS-EXOTICS, TOKYO-LCG2_PHYS-EXOTICS, ccs, cdm, hqt, jdm, jmx, lpx, lup, ueh]
   artifacts:
     paths:
-      - ./reports/$DISK.table
+      - ./reports/$NAME.table
     expire_in: 24h
-  rules:
-    - if: $CI_PIPELINE_SOURCE == "schedule" && $CI_PIPELINE_TIMING == "daily"
-
-csv_to_twiki_subgroup:
-  stage: process
-  image: registry.cern.ch/docker.io/library/python:3.13-slim-bullseye
-  script:
-    - python3 helpers/csv_to_twiki.py --file reports/$SUBGROUP.csv --delimiter , --highlight-header
-  parallel:
-    matrix:
-      - SUBGROUP: [ccs, cdm, hqt, jdm, jmx, lpx, lup, ueh]
-  artifacts:
-    paths:
-      - ./reports/$SUBGROUP.table
-    expire_in: 24h
-  rules:
-    - if: $CI_PIPELINE_SOURCE == "schedule" && $CI_PIPELINE_TIMING == "daily"
+  rules: !reference [.rules, daily]
 
 csv_to_twiki_lookup:
   stage: process
-  image: registry.cern.ch/docker.io/library/python:3.13-slim-bullseye
+  image: $PYTHON_IMAGE
   script:
     - python3 helpers/csv_to_twiki.py --file lookup_table.csv
   artifacts:
     paths:
       - ./reports/lookup_table.table
     expire_in: 24h
-  rules:
-    - if: $CI_PIPELINE_SOURCE == "schedule" && $CI_PIPELINE_TIMING == "daily"
+  rules: !reference [.rules, daily]
 
 plot:
   stage: process
-  image: registry.cern.ch/docker.io/library/python:3.13-slim-bullseye
+  image: $PYTHON_IMAGE
   before_script:
     - apt update
     - apt install -y git
@@ -129,8 +119,7 @@ plot:
       - ./reports/*.pdf
     expire_in: 24h
   retry: 1 # sometimes there are issues e.g. when pulling docker image
-  rules:
-    - if: $CI_PIPELINE_SOURCE == "schedule" && $CI_PIPELINE_TIMING == "daily"
+  rules: !reference [.rules, daily]
   allow_failure: True
 
 commit:
@@ -145,12 +134,11 @@ commit:
     # commit and push only if changes present
     # https://stackoverflow.com/questions/22040113/how-to-let-jenkins-git-commit-only-if-there-are-changes
     - git diff --staged --quiet || (git commit -m "update subgroup data (`date +'%Y-%m-%d'`)" && git push -o ci.skip gitlab_origin HEAD:main)
-  rules:
-    - if: $CI_PIPELINE_SOURCE == "schedule" && $CI_PIPELINE_TIMING == "daily"
+  rules: !reference [.rules, daily]
 
 email:
   stage: email
-  image: registry.cern.ch/docker.io/library/python:3.13-slim-bullseye
+  image: $PYTHON_IMAGE
   before_script:
     - apt update
     - apt install -y git
@@ -161,5 +149,4 @@ email:
     paths:
       - latex.pdf
     expire_in: 28d
-  rules:
-    - if: $CI_PIPELINE_SOURCE == "schedule" && $CI_PIPELINE_TIMING == "weekly"
+  rules: !reference [.rules, weekly]
