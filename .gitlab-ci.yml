@@ -19,9 +19,12 @@ variables:
 # create and commit all reports only on daily schedule
 grid:
   stage: report
-  image: $PYTHON_IMAGE
+  tags:
+    - eos
   before_script:
+    - yum install -y python3-pip
     - pip3 install pandas
+    - echo "${PASSWORD}" | kinit $USERNAME
   script:
     - python3 gridspace.py --rse $DISK
   parallel:
