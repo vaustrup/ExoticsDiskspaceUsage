@@ -1,5 +1,5 @@
 | * Analysis Team * | * Disk Usage in GB * | * Number of files * | * Glance code * |
-| ANA-EXOT-2021-33_PhotonPlusJet | 342.28 | 27273 | ANA-EXOT-2021-33 |
+| ANA-EXOT-2021-33_PhotonPlusJet | 341.88 | 27164 | ANA-EXOT-2021-33 |
 | ANA-EXOT-2023-18 | 1108.7 | 195284 | ANA-EXOT-2023-18 |
 | ANA-EXOT-2023-19_allhadMET | 2668.3 | 7334 | ANA-EXOT-2023-19 |
 | ANA-EXOT-2023-25_mono-b-c | 3286.3 | 4877 | ANA-EXOT-2023-25 |
@@ -7,16 +7,16 @@
 | ANA-EXOT-2023-32_svjl_old | 151.65 | 1996 |  |
 | ANA-EXOT-2024-01_dibjetISR | 8790.1 | 2497 | ANA-EXOT-2024-01 |
 | MultiBJet | 90.573 | 70 | ANA-EXOT-2018-09 |
-| SC_NCBH_NMDS | 1441 | 107392 | ANA-EXOT-2022-21 |
+| SC_NCBH_NMDS | 1443.1 | 107389 | ANA-EXOT-2022-21 |
 | dibjet | 708.07 | 2791 | ANA-EXOT-2019-03 |
-| dijet | 5823.6 | 105784 | ANA-EXOT-2019-03 |
-| dijetISR | 1542.6 | 8130 | ANA-EXOT-2019-01 |
-| lepdijet | 2152.9 | 101427 | ANA-EXOT-2018-32/ANA-EXOT-2020-15/ANA-EXOT-2022-07 |
+| dijet | 5823.7 | 105787 | ANA-EXOT-2019-03 |
+| dijetISR | 1542.6 | 8115 | ANA-EXOT-2019-01 |
+| lepdijet | 2127.5 | 101806 | ANA-EXOT-2018-32/ANA-EXOT-2020-15/ANA-EXOT-2022-07 |
 | monoSWW | 571.97 | 51491 | ANA-EXOT-2018-40 |
 | monojet | 420.45 | 66702 | ANA-EXOT-2018-06 |
-| qgdijet | 3316.8 | 211267 | ANA-EXOT-2019-32 |
-| svjets | 190.02 | 13258 | ANA-EXOT-2022-37 |
+| qgdijet | 3316.8 | 211268 | ANA-EXOT-2019-32 |
+| svjets | 198.74 | 13262 | ANA-EXOT-2022-37 |
 | svjets-schannel | 915.66 | 5964 | ANA-EXOT-2021-19 |
-| vbfinv | 816.75 | 54833 | ANA-EXOT-2022-36 |
-| Total Sum | 34562 | 970643 |  |
+| vbfinv | 816.44 | 54840 | ANA-EXOT-2022-36 |
+| Total Sum | 34547 | 970910 |  |
 <!-- This file was created automatically from reports/jdm.csv. Do not edit it manually. -->
