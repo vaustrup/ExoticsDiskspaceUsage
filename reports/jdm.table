@@ -1,6 +1,6 @@
 | * Analysis Team * | * Disk Usage in GB * | * Number of files * | * Glance code * |
-| ANA-EXOT-2021-33_PhotonPlusJet | 342.28 | 27270 | ANA-EXOT-2021-33 |
-| ANA-EXOT-2023-18 | 1108.7 | 195284 | ANA-EXOT-2023-18 |
+| ANA-EXOT-2021-33_PhotonPlusJet | 342.28 | 27274 | ANA-EXOT-2021-33 |
+| ANA-EXOT-2023-18 | 1108.7 | 195296 | ANA-EXOT-2023-18 |
 | ANA-EXOT-2023-19_allhadMET | 2668.3 | 7334 | ANA-EXOT-2023-19 |
 | ANA-EXOT-2023-25_mono-b-c | 3286.3 | 4877 | ANA-EXOT-2023-25 |
 | ANA-EXOT-2023-32_svjl | 224.19 | 2273 | ANA-EXOT-2023-32 |
@@ -11,12 +11,12 @@
 | dibjet | 708.07 | 2791 | ANA-EXOT-2019-03 |
 | dijet | 5823.7 | 105787 | ANA-EXOT-2019-03 |
 | dijetISR | 1542.6 | 8130 | ANA-EXOT-2019-01 |
-| lepdijet | 2072.7 | 102001 | ANA-EXOT-2018-32/ANA-EXOT-2020-15/ANA-EXOT-2022-07 |
+| lepdijet | 2072.7 | 102003 | ANA-EXOT-2018-32/ANA-EXOT-2020-15/ANA-EXOT-2022-07 |
 | monoSWW | 571.97 | 51491 | ANA-EXOT-2018-40 |
-| monojet | 420.44 | 66702 | ANA-EXOT-2018-06 |
-| qgdijet | 3316.8 | 211267 | ANA-EXOT-2019-32 |
+| monojet | 420.45 | 66703 | ANA-EXOT-2018-06 |
+| qgdijet | 3316.8 | 211268 | ANA-EXOT-2019-32 |
 | svjets | 198.74 | 13262 | ANA-EXOT-2022-37 |
 | svjets-schannel | 915.66 | 5964 | ANA-EXOT-2021-19 |
-| vbfinv | 815.86 | 54817 | ANA-EXOT-2022-36 |
-| Total Sum | 34492 | 971207 |  |
+| vbfinv | 816.75 | 54841 | ANA-EXOT-2022-36 |
+| Total Sum | 34493 | 971251 |  |
 <!-- This file was created automatically from reports/jdm.csv. Do not edit it manually. -->
